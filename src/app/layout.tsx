@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 
@@ -8,7 +8,19 @@ export const metadata: Metadata = {
   title: "GanzApps — AI-Powered Development Studio",
   description:
     "Build smarter, scale faster. SaaS development, agentic AI systems, and business digitalization.",
-  icons: { icon: "/logo.png" },
+  icons: {
+    icon: "/favicon.ico",
+    shortcut: "/favicon-16x16.png",
+    apple: "/apple-touch-icon.png",
+  },
+  manifest: "/site.webmanifest",
+  other: {
+    "facebook-domain-verification": "blb1m72442p6hcyqylaagqohq8l349",
+  },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#4ADE80",
 };
 
 export default function RootLayout({
@@ -18,6 +30,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <head>
+        <meta name="facebook-domain-verification" content="blb1m72442p6hcyqylaagqohq8l349" />
+      </head>
       <body className={inter.className}>{children}</body>
     </html>
   );
