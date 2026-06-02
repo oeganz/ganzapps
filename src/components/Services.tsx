@@ -16,7 +16,7 @@ const services = [
   },
   {
     icon: "📱",
-    title: "Business Digitalization",
+    title: "AI Business Digitalization",
     desc: "Transform manual processes into automated digital systems. CRM, ERP, internal tools — we build what you need.",
   },
   {
