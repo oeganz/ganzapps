@@ -8,9 +8,9 @@ export default function Navbar() {
   return (
     <nav className="fixed top-0 w-full z-50 bg-surface/80 backdrop-blur-md border-b border-white/5">
       <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
-        <a href="#" className="flex items-center gap-2">
+        <a href="#" className="flex items-center gap-3">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/logo.png" alt="GanzApps" className="h-8" />
+          <img src="/logo-circle.png" alt="GanzApps" className="h-10 w-10 rounded-full" />
           <span className="text-lg font-bold text-white">GanzApps</span>
         </a>
 
