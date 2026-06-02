@@ -1,0 +1,17 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://ganzapps.my.id/sitemap.xml
+
+# Block AI training crawlers
+User-agent: GPTBot
+Disallow: /
+
+User-agent: ChatGPT-User
+Disallow: /
+
+User-agent: CCBot
+Disallow: /
+
+User-agent: Anthropic AI
+Disallow: /
