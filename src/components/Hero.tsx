@@ -39,8 +39,6 @@ export default function Hero() {
 
       {/* Content */}
       <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 pt-20 sm:pt-24 w-full">
-        
-        {/* Text block */}
         <div className={`text-center lg:text-left ${mounted ? 'hero-content' : 'opacity-0'}`}>
           
           {/* Badge */}
@@ -74,7 +72,6 @@ export default function Hero() {
               See Our Work
             </a>
           </div>
-
         </div>
       </div>
 
