@@ -63,11 +63,11 @@ export default function Contact() {
         <ScrollReveal delay={200}>
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-14">
             <a
-              href="mailto:hello@ganzapps.my.id"
+              href="mailto:oeganz1999@gmail.com"
               className="btn-primary text-base"
             >
               <Mail className="w-5 h-5" strokeWidth={1.5} />
-              hello@ganzapps.my.id
+              oeganz1999@gmail.com
             </a>
             <a
               href="https://discord.gg/ganzapps"

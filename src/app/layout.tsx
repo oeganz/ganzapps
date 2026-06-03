@@ -111,7 +111,7 @@ export default function RootLayout({
         ],
         contactPoint: {
           "@type": "ContactPoint",
-          email: "hello@ganzapps.my.id",
+          email: "oeganz1999@gmail.com",
           contactType: "customer service",
         },
       },

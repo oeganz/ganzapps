@@ -60,7 +60,7 @@ export default function Navbar() {
     <>
       <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${
         scrolled
-          ? "bg-surface/85 backdrop-blur-2xl border-b border-white/[0.06] shadow-[0_1px_30px_rgba(0,0,0,0.4)]"
+          ? "bg-[#0a0a0a]/85 backdrop-blur-2xl border-b border-white/[0.06] shadow-[0_1px_30px_rgba(0,0,0,0.4)]"
           : "bg-transparent border-b border-transparent"
       }`}>
         <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
@@ -79,19 +79,24 @@ export default function Navbar() {
 
           {/* Desktop links */}
           <div className="hidden md:flex items-center gap-7">
-            {navLinks.map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
-                className={`text-sm font-medium transition-colors link-hover ${
-                  activeSection === link.href.slice(1)
-                    ? "text-brand"
-                    : "text-gray-400 hover:text-white"
-                }`}
-              >
-                {link.label}
-              </a>
-            ))}
+            {navLinks.map((link) => {
+              const isActive = activeSection === link.href.slice(1);
+              return (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  className={`text-sm font-medium transition-colors relative group/link ${
+                    isActive ? "text-brand" : "text-gray-400 hover:text-white"
+                  }`}
+                >
+                  {link.label}
+                  {isActive && (
+                    <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-brand shadow-[0_0_8px_rgba(74,222,128,0.8)]" />
+                  )}
+                  <span className="absolute bottom-0 left-0 w-0 h-px bg-brand transition-all duration-300 group-hover/link:w-full" />
+                </a>
+              );
+            })}
           </div>
 
           {/* Desktop CTA */}
@@ -117,22 +122,20 @@ export default function Navbar() {
 
       {/* Mobile full-screen overlay */}
       <div
-        className={`fixed inset-0 z-[100] md:hidden ${
-          open ? "visible" : "invisible"
+        className={`fixed inset-0 z-[100] md:hidden transition-opacity duration-300 ${
+          open ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
         }`}
       >
         {/* Backdrop */}
         <div
-          className={`absolute inset-0 bg-surface/95 backdrop-blur-2xl transition-opacity duration-300 ${
-            open ? "opacity-100" : "opacity-0"
-          }`}
+          className="absolute inset-0 bg-[#0a0a0a]/95 backdrop-blur-2xl"
           onClick={() => setOpen(false)}
         />
         
         {/* Menu panel */}
         <div
           className={`absolute inset-x-0 top-0 flex flex-col transition-all duration-300 ease-out ${
-            open ? "translate-y-0 opacity-100" : "-translate-y-full opacity-0"
+            open ? "translate-y-0" : "-translate-y-full"
           }`}
         >
           {/* Top bar */}
@@ -158,8 +161,8 @@ export default function Navbar() {
                 key={link.href}
                 href={link.href}
                 onClick={() => setOpen(false)}
-                className="py-4 text-xl font-semibold text-gray-300 hover:text-brand border-b border-white/[0.04] transition-colors"
-                style={{ animationDelay: `${i * 40}ms` }}
+                className="mobile-nav-item py-4 text-xl font-semibold text-gray-300 hover:text-brand border-b border-white/[0.04] transition-colors"
+                style={{ animationDelay: `${i * 50}ms` }}
               >
                 {link.label}
               </a>
