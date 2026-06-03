@@ -91,7 +91,7 @@ export default function Pricing() {
                   <p className="text-xs font-semibold tracking-wider uppercase text-brand mb-2">
                     {plan.name}
                   </p>
-                  <p className="text-gray-400 text-sm">{plan.tagline}</p>
+                  <p className="text-[var(--text-muted)] text-sm">{plan.tagline}</p>
                 </div>
 
                 {/* Price */}
@@ -105,7 +105,7 @@ export default function Pricing() {
                 {/* Features */}
                 <ul className="space-y-3 mb-10 flex-1">
                   {plan.features.map((f) => (
-                    <li key={f} className="flex items-start gap-3 text-sm text-gray-300">
+                    <li key={f} className="flex items-start gap-3 text-sm var(--text-body)">
                       <Check className="w-4 h-4 text-brand mt-0.5 flex-shrink-0" strokeWidth={2.5} />
                       {f}
                     </li>
@@ -118,7 +118,7 @@ export default function Pricing() {
                   className={`block w-full text-center font-semibold text-sm px-6 py-3.5 rounded-xl transition-all ${
                     plan.ctaVariant === "primary"
                       ? "bg-brand text-black hover:bg-emerald-400 hover:shadow-[0_0_30px_-5px_rgba(74,222,128,0.5)]"
-                      : "border border-white/[0.1] text-gray-300 hover:border-brand/30 hover:text-white hover:shadow-[0_0_30px_-8px_rgba(74,222,128,0.2)]"
+                      : "border border-white/[0.1] var(--text-body) hover:border-brand/30 hover:text-white hover:shadow-[0_0_30px_-8px_rgba(74,222,128,0.2)]"
                   }`}
                 >
                   {plan.cta}

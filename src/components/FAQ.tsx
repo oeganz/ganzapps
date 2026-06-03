@@ -56,13 +56,13 @@ export default function FAQ() {
                   onClick={() => setOpenIndex(openIndex === i ? null : i)}
                   className="w-full flex items-center justify-between text-left px-6 py-5 gap-4 hover:bg-white/[0.02] transition-colors"
                 >
-                  <span className="font-semibold text-sm text-gray-100 group-hover:text-white">
+                  <span className="font-semibold text-sm text-[var(--text)] group-hover:text-white">
                     {item.q}
                   </span>
                   <span className={`flex-shrink-0 w-6 h-6 rounded-full border flex items-center justify-center transition-all duration-300 ${
                     openIndex === i
                       ? "border-brand/50 bg-brand/10 text-brand"
-                      : "border-white/10 text-gray-500"
+                      : "border-white/10 text-[var(--text-muted)]"
                   }`}>
                     {openIndex === i ? (
                       <Minus className="w-3 h-3" strokeWidth={2.5} />
@@ -77,7 +77,7 @@ export default function FAQ() {
                     openIndex === i ? "max-h-64 opacity-100" : "max-h-0 opacity-0"
                   }`}
                 >
-                  <p className="px-6 pb-6 text-gray-400 text-sm leading-relaxed">
+                  <p className="px-6 pb-6 text-[var(--text-muted)] text-sm leading-relaxed">
                     {item.a}
                   </p>
                 </div>

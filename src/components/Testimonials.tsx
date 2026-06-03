@@ -61,7 +61,7 @@ export default function Testimonials() {
                 </div>
 
                 {/* Quote */}
-                <blockquote className="text-gray-300 text-base leading-relaxed mb-8 flex-1">
+                <blockquote className="var(--text-body) text-base leading-relaxed mb-8 flex-1">
                   &ldquo;{t.quote}&rdquo;
                 </blockquote>
 
@@ -74,7 +74,7 @@ export default function Testimonials() {
                   </div>
                   <div>
                     <p className="text-white font-semibold text-sm">{t.name}</p>
-                    <p className="text-gray-500 text-xs">
+                    <p className="text-[var(--text-muted)] text-xs">
                       {t.role}, {t.company}
                     </p>
                   </div>

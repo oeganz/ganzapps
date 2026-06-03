@@ -10,7 +10,7 @@ const projects = [
     type: "Full-Stack SaaS",
     desc: "Multi-tenant SaaS products with authentication, subscription billing, and real-time dashboards. From MVP to 10,000+ users.",
     tags: ["Next.js", "TypeScript", "PostgreSQL", "Stripe"],
-    color: "#4ADE80",
+    color: "var(--primary)",
   },
   {
     icon: BrainCircuit,
@@ -81,7 +81,7 @@ export default function Portfolio() {
                 </h3>
 
                 {/* Desc */}
-                <p className="text-gray-400 leading-relaxed mb-6 flex-grow group-hover:text-gray-300 transition-colors">
+                <p className="text-[var(--text-muted)] leading-relaxed mb-6 flex-grow group-hover:var(--text-body) transition-colors">
                   {p.desc}
                 </p>
 

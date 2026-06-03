@@ -75,7 +75,7 @@ function StatCard({ stat }: { stat: StatItem }) {
       <div className="text-3xl md:text-4xl font-bold text-brand mb-1">
         <Counter target={stat.value} suffix={stat.suffix} active={active} />
       </div>
-      <p className="text-gray-400 text-sm font-medium">{stat.label}</p>
+      <p className="text-[var(--text-muted)] text-sm font-medium">{stat.label}</p>
     </div>
   );
 }

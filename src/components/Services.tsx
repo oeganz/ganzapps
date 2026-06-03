@@ -10,7 +10,7 @@ const services = [
     title: "SaaS Building",
     desc: "Full-stack SaaS products — auth, billing, dashboards, APIs. We build the whole thing, not just the UI.",
     badge: "Popular",
-    accent: "#4ADE80",
+    accent: "var(--primary)",
   },
   {
     icon: Brain,
@@ -24,7 +24,7 @@ const services = [
     title: "ADLC Setup",
     desc: "AI Development Lifecycle integration — from code generation to CI/CD, testing, and production deployment.",
     badge: null,
-    accent: "#38bdf8",
+    accent: "var(--cyan)",
   },
   {
     icon: Workflow,
@@ -86,7 +86,7 @@ function ServiceCard({ s, delay }: { s: typeof services[0]; delay: number }) {
         </h3>
 
         {/* Description */}
-        <p className="text-gray-400 leading-relaxed text-sm group-hover:text-gray-300 transition-colors">
+        <p className="text-[var(--text-muted)] leading-relaxed text-sm group-hover:var(--text-body) transition-colors">
           {s.desc}
         </p>
 

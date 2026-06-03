@@ -69,10 +69,10 @@ export default function TechStack() {
                     className="w-5 h-5 text-brand/50 group-hover:text-brand transition-colors duration-300"
                     strokeWidth={1.5}
                   />
-                  <span className="font-semibold text-sm text-gray-200 group-hover:text-white transition-colors duration-300">
+                  <span className="font-semibold text-sm text-[var(--text-body)] group-hover:text-white transition-colors duration-300">
                     {stack.label}
                   </span>
-                  <span className="text-xs text-gray-600">{stack.category}</span>
+                  <span className="text-xs text-[var(--text-muted)]">{stack.category}</span>
                 </div>
               );
             })}

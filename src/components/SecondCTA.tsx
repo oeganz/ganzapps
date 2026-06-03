@@ -20,7 +20,7 @@ export default function SecondCTA() {
               <h2 className="text-3xl md:text-5xl font-bold tracking-tight mb-5 text-white leading-tight">
                 Your next project starts today.
               </h2>
-              <p className="text-gray-400 text-base mb-10 max-w-lg mx-auto">
+              <p className="text-[var(--text-muted)] text-base mb-10 max-w-lg mx-auto">
                 Talk to us. No commitment, just clarity.
               </p>
               <a

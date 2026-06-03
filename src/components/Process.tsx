@@ -69,7 +69,7 @@ export default function Process() {
                 <h3 className="text-xl font-bold mb-3 group-hover:text-brand transition-colors">
                   {step.title}
                 </h3>
-                <p className="text-gray-400 text-sm leading-relaxed">{step.desc}</p>
+                <p className="text-[var(--text-muted)] text-sm leading-relaxed">{step.desc}</p>
               </div>
             </ScrollReveal>
           ))}
@@ -88,7 +88,7 @@ export default function Process() {
                     <step.icon className="w-5 h-5 text-brand" strokeWidth={1.5} />
                   </div>
                   <h3 className="text-lg font-bold mb-2 group-hover:text-brand">{step.title}</h3>
-                  <p className="text-gray-400 text-sm leading-relaxed">{step.desc}</p>
+                  <p className="text-[var(--text-muted)] text-sm leading-relaxed">{step.desc}</p>
                 </div>
               </ScrollReveal>
             ))}

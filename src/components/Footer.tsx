@@ -43,13 +43,13 @@ export default function Footer() {
         {/* Left: brand */}
         <div className="flex flex-col items-center md:items-start gap-2">
           <p className="text-white font-bold text-lg">GanzApps</p>
-          <p className="text-gray-600 text-sm">
+          <p className="text-[var(--text-muted)] text-sm">
             &copy; {new Date().getFullYear()} GanzApps. All rights reserved.
           </p>
         </div>
 
         {/* Center: nav links */}
-        <nav className="flex flex-wrap justify-center gap-6 text-sm text-gray-500">
+        <nav className="flex flex-wrap justify-center gap-6 text-sm text-[var(--text-muted)]">
           {footerLinks.map((link) => (
             <a
               key={link.href}
@@ -70,7 +70,7 @@ export default function Footer() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label={s.label}
-              className="w-9 h-9 rounded-lg glass-card flex items-center justify-center text-gray-500 hover:text-brand hover:border-brand/20 transition-all duration-300"
+              className="w-9 h-9 rounded-lg glass-card flex items-center justify-center text-[var(--text-muted)] hover:text-brand hover:border-brand/20 transition-all duration-300"
             >
               {s.icon}
             </a>

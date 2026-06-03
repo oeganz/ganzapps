@@ -55,12 +55,12 @@ export default function About() {
               </h2>
             </ScrollReveal>
             <ScrollReveal delay={100}>
-              <p className="text-lg text-gray-400 leading-relaxed mb-6">
+              <p className="text-lg text-[var(--text-muted)] leading-relaxed mb-6">
                 GanzApps is a lean, AI-powered development studio. We don&apos;t just
                 consult — we build. Every project ships with production-grade code,
                 automated pipelines, and AI agents woven into the stack from day one.
               </p>
-              <p className="text-lg text-gray-400 leading-relaxed">
+              <p className="text-lg text-[var(--text-muted)] leading-relaxed">
                 Whether you&apos;re launching a SaaS product, digitizing operations, or
                 deploying autonomous agents — we move fast, cut complexity, and deliver
                 systems that run themselves.
@@ -79,7 +79,7 @@ export default function About() {
                 <div className="absolute inset-8 rounded-full about-orb flex items-center justify-center">
                   <div className="text-center">
                     <div className="text-5xl font-bold text-brand mb-1">50+</div>
-                    <div className="text-sm text-gray-400 font-medium tracking-wide">Projects Shipped</div>
+                    <div className="text-sm text-[var(--text-muted)] font-medium tracking-wide">Projects Shipped</div>
                   </div>
                 </div>
                 {/* Orbiting dots */}
@@ -100,13 +100,13 @@ export default function About() {
 
               {/* Quote icon */}
               <div className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-brand/10 mb-6">
-                <Quote className="w-5 h-5 text-brand" fill="#4ADE80" />
+                <Quote className="w-5 h-5 text-brand" fill="var(--primary)" />
               </div>
 
               {/* Stars */}
               <div className="flex gap-1 justify-center mb-8">
                 {[1,2,3,4,5].map(n => (
-                  <Star key={n} className="w-4 h-4 text-brand" fill="#4ADE80" />
+                  <Star key={n} className="w-4 h-4 text-brand" fill="var(--primary)" />
                 ))}
               </div>
 
@@ -128,7 +128,7 @@ export default function About() {
                 <p className="font-semibold text-sm" style={{ color: "var(--heading-color)" }}>
                   {testimonials[active].author}
                 </p>
-                <p className="text-gray-500 text-xs">{testimonials[active].role}</p>
+                <p className="text-[var(--text-muted)] text-xs">{testimonials[active].role}</p>
               </div>
 
               {/* Dots */}

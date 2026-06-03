@@ -15,7 +15,7 @@ export default function ClientLogos() {
     <section className="py-16 px-6 border-y border-white/[0.05] bg-surface/40">
       <div className="max-w-6xl mx-auto">
         <ScrollReveal>
-          <p className="text-center text-xs text-gray-500 font-semibold tracking-[0.2em] uppercase mb-10">
+          <p className="text-center text-xs text-[var(--text-muted)] font-semibold tracking-[0.2em] uppercase mb-10">
             Trusted by
           </p>
         </ScrollReveal>
@@ -24,7 +24,7 @@ export default function ClientLogos() {
             {logos.map((name, i) => (
               <span
                 key={name}
-                className="text-gray-500 font-bold text-base md:text-lg tracking-wide hover:text-gray-300 transition-colors cursor-default select-none"
+                className="text-[var(--text-muted)] font-bold text-base md:text-lg tracking-wide hover:var(--text-body) transition-colors cursor-default select-none"
                 style={{ transitionDelay: `${i * 60}ms` }}
               >
                 {name}
