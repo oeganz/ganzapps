@@ -1,115 +1,205 @@
+/* ── GanzApps Design Tokens ── */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
-  html {
-    scroll-behavior: smooth;
-  }
-
-  /* Dark mode (default) */
+  /* Dark theme (default) */
   html, html.dark {
-    --brand: #4ADE80;
-    --page-bg: #0a0a0a;
-    --surface-bg: #0a0a0a;
-    --surface-50: #111111;
-    --surface-100: #1a1a1a;
-    --surface-200: #222222;
-    --surface-300: #2a2a2a;
-    --card-bg: #111111;
-    --nav-bg: rgba(10,10,10,0.85);
-    --text-primary: #ffffff;
-    --text-secondary: #a1a1aa;
-    --text-muted: #888888;
-    --border-color: rgba(255,255,255,0.06);
-    --heading-color: #ffffff;
-    --subheading-color: #a1a1aa;
-    --body-bg: #0a0a0a;
+    /* Base */
+    --ink: #0A0E1A;
+    --surface: #111729;
+    --elevated: #1A2236;
+    --border: #2A3349;
+    /* Brand — blue primary, violet/cyan for accents */
+    --primary: #4F7CFF;
+    --primary-deep: #3B62E6;
+    --violet: #8B5CF6;
+    --cyan: #22D3EE;
+    /* Brand alias (backward compat) */
+    --brand: #4F7CFF;
+    --brand-10: rgba(79, 124, 255, 0.10);
+    --brand-20: rgba(79, 124, 255, 0.20);
+    /* Text */
+    --text: #F8FAFC;
+    --text-body: #CBD5E1;
+    --text-muted: #8392A8;
+    /* Semantic */
+    --success: #34D399;
+    --warning: #FBBF24;
+    --error: #F87171;
+    /* Body / page bg */
+    --body-bg: #0A0E1A;
+    /* Cards / surfaces */
+    --card-bg: #111729;
+    --surface-50: #141D2E;
+    --surface-100: #1A2236;
+    --surface-200: #1F2A40;
+    --surface-300: #263349;
+    /* Headings */
+    --heading-color: #F8FAFC;
+    /* Borders */
+    --border-color: rgba(42, 51, 73, 0.6);
+    /* Gradients */
+    --brand-gradient: linear-gradient(135deg, #4F7CFF, #8B5CF6);
   }
 
-  /* Light mode */
   html.light {
-    --brand: #22c55e;
-    --page-bg: #ffffff;
-    --surface-bg: #f5f5f5;
-    --surface-50: #f0f0f0;
-    --surface-100: #e8e8e8;
-    --surface-200: #d4d4d4;
-    --surface-300: #c4c4c4;
-    --card-bg: #ffffff;
-    --nav-bg: rgba(255,255,255,0.85);
-    --text-primary: #111111;
-    --text-secondary: #555555;
-    --text-muted: #888888;
-    --border-color: rgba(0,0,0,0.08);
-    --heading-color: #111111;
-    --subheading-color: #555555;
-    --body-bg: #ffffff;
+    /* Light theme */
+    --ink: #F8FAFC;
+    --surface: #F1F5F9;
+    --elevated: #FFFFFF;
+    --border: #E2E8F0;
+    --primary: #3B62E6;
+    --primary-deep: #2D52B0;
+    --violet: #7C3AED;
+    --cyan: #06B6D4;
+    --brand: #3B62E6;
+    --brand-10: rgba(59, 98, 230, 0.08);
+    --brand-20: rgba(59, 98, 230, 0.16);
+    --text: #0A0E1A;
+    --text-body: #334155;
+    --text-muted: #94A3B8;
+    --success: #059669;
+    --warning: #D97706;
+    --error: #DC2626;
+    --body-bg: #F8FAFC;
+    --card-bg: #FFFFFF;
+    --surface-50: #F8FAFC;
+    --surface-100: #F1F5F9;
+    --surface-200: #E2E8F0;
+    --surface-300: #CBD5E1;
+    --heading-color: #0A0E1A;
+    --border-color: rgba(226, 232, 240, 0.8);
+    --brand-gradient: linear-gradient(135deg, #3B62E6, #7C3AED);
+  }
+
+  html {
+    background-color: var(--body-bg);
+    color: var(--text);
+    scroll-behavior: smooth;
+    scroll-padding-top: 80px;
   }
 
   body {
-    @apply antialiased;
     background-color: var(--body-bg);
-    color: var(--text-primary);
-  }
-
-  /* Apply CSS vars to Tailwind utilities */
-  .bg-page { background-color: var(--page-bg); }
-  .bg-surface { background-color: var(--surface-bg); }
-  .bg-surface-50 { background-color: var(--surface-50); }
-  .bg-surface-100 { background-color: var(--surface-100); }
-  .bg-surface-200 { background-color: var(--surface-200); }
-  .bg-surface-300 { background-color: var(--surface-300); }
-  .bg-card { background-color: var(--card-bg); }
-  .text-primary { color: var(--text-primary); }
-  .text-secondary { color: var(--text-secondary); }
-  .text-muted { color: var(--text-muted); }
-  .text-brand { color: var(--brand); }
-  .bg-brand { background-color: var(--brand); }
-  .nav-bg { background-color: var(--nav-bg); }
-  .border-custom { border-color: var(--border-color); }
-  .text-heading { color: var(--heading-color); }
-  .text-subheading { color: var(--subheading-color); }
-}
-
-@layer components {
-  /* Scroll reveal */
-  .reveal {
-    opacity: 0;
-    transform: translateY(28px);
-    transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1),
-                transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
-  }
-  .reveal.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  .reveal-delay-1 { transition-delay: 0.08s; }
-  .reveal-delay-2 { transition-delay: 0.16s; }
-  .reveal-delay-3 { transition-delay: 0.24s; }
-  .reveal-delay-4 { transition-delay: 0.32s; }
-  .reveal-delay-5 { transition-delay: 0.40s; }
-
-  /* Mobile nav */
-  .mobile-nav-item {
-    animation: slideIn 0.3s ease-out both;
-  }
-  @keyframes slideIn {
-    from { opacity: 0; transform: translateX(-12px); }
-    to { opacity: 1; transform: translateX(0); }
+    color: var(--text-body);
   }
 }
 
-/* ── Hero content animation ── */
+/* ── Anti-flash ── */
+html.dark { background-color: var(--ink); }
+html.light { background-color: var(--ink); }
+
+/* ── Gradient text utility ── */
+.gradient-text {
+  background: var(--brand-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ── Glass card base ── */
+.glass-card {
+  background-color: var(--card-bg);
+  border: 1px solid var(--border-color);
+  backdrop-filter: blur(8px);
+}
+
+/* ── Buttons ── */
+.btn-primary {
+  background: var(--primary);
+  color: #fff;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: all 0.2s;
+}
+.btn-primary:hover {
+  background: var(--primary-deep);
+  box-shadow: 0 0 20px rgba(79, 124, 255, 0.3);
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--text-body);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  font-weight: 600;
+  transition: all 0.2s;
+}
+.btn-secondary:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+/* ── Scrollbar hide ── */
+.scrollbar-hide::-webkit-scrollbar { display: none; }
+.scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* ── Scroll reveal ── */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── Process line animation ── */
+.process-line {
+  background: linear-gradient(90deg, var(--primary) 0%, var(--violet) 50%, var(--primary) 100%);
+  background-size: 200% 100%;
+  animation: processFlow 3s linear infinite;
+}
+@keyframes processFlow {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 200% 50%; }
+}
+
+/* ── About orb glow ── */
+.about-orb {
+  background: radial-gradient(circle at center, rgba(79, 124, 255, 0.15) 0%, rgba(139, 92, 246, 0.05) 60%, transparent 100%);
+  box-shadow: 0 0 60px rgba(79, 124, 255, 0.2), inset 0 0 40px rgba(79, 124, 255, 0.08);
+}
+
+/* ── Nav active indicator ── */
+.nav-active::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--primary);
+  border-radius: 2px;
+}
+
+/* ── Stat glow ── */
+.stat-glow {
+  text-shadow: 0 0 30px rgba(79, 124, 255, 0.4);
+}
+
+/* ── Hero content fade-in ── */
 .hero-content {
-  animation: heroFadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: heroFadeIn 0.8s ease-out forwards;
 }
 @keyframes heroFadeIn {
   from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
-/* ── Fix navbar overlap on scroll-to-id ── */
-html {
-  scroll-padding-top: 80px;
+/* ── Grid background ── */
+.hero-grid {
+  background-image:
+    linear-gradient(rgba(79, 124, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(79, 124, 255, 0.04) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+
+/* ── Selection color ── */
+::selection {
+  background: rgba(79, 124, 255, 0.3);
+  color: #F8FAFC;
 }
