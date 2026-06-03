@@ -1,48 +1,12 @@
 "use client";
 
 import ScrollReveal from "./ScrollReveal";
-import { Star, Quote } from "lucide-react";
-import { useState, useEffect } from "react";
-
-const testimonials = [
-  {
-    quote:
-      "GanzApps shipped our entire MVP in three weeks — auth, billing, AI agent pipeline, and deployment. We went from idea to paying customers faster than I thought possible.",
-    author: "Rizky Pratama",
-    role: "CEO, Nexusflow — AI Analytics Startup",
-    initials: "RP",
-  },
-  {
-    quote:
-      "We needed a partner who understood both the AI layer and the product layer. GanzApps delivered a complete system with LangGraph agents and a polished SaaS dashboard — on time and on budget.",
-    author: "Sarah Chen",
-    role: "Founder, DataStream AI",
-    initials: "SC",
-  },
-  {
-    quote:
-      "The ADLC setup transformed how we ship. Our dev cycle went from 3 weeks per feature to 4 days. The AI agents they built handle 80% of our testing and deployment work automatically.",
-    author: "Dimas Wijaya",
-    role: "CTO, RetailSense — E-commerce Platform",
-    initials: "DW",
-  },
-];
 
 export default function About() {
-  const [active, setActive] = useState(0);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setActive(prev => (prev + 1) % testimonials.length);
-    }, 5000);
-    return () => clearInterval(interval);
-  }, []);
-
   return (
     <section id="about" className="py-32 px-6">
       <div className="max-w-6xl mx-auto">
-        {/* Two-column layout */}
-        <div className="grid lg:grid-cols-2 gap-16 items-start mb-32">
+        <div className="grid lg:grid-cols-2 gap-16 items-center">
           {/* Left: text */}
           <div>
             <ScrollReveal>
@@ -56,97 +20,44 @@ export default function About() {
             </ScrollReveal>
             <ScrollReveal delay={100}>
               <p className="text-lg text-[var(--text-muted)] leading-relaxed mb-6">
-                GanzApps is a lean, AI-powered development studio. We don&apos;t just
+                GanzApps is a lean, AI-powered development studio. We don't just
                 consult — we build. Every project ships with production-grade code,
                 automated pipelines, and AI agents woven into the stack from day one.
               </p>
               <p className="text-lg text-[var(--text-muted)] leading-relaxed">
-                Whether you&apos;re launching a SaaS product, digitizing operations, or
+                Whether you're launching a SaaS product, digitizing operations, or
                 deploying autonomous agents — we move fast, cut complexity, and deliver
                 systems that run themselves.
               </p>
             </ScrollReveal>
           </div>
 
-          {/* Right: orb visual */}
-          <div className="flex items-center justify-center lg:pt-10">
-            <ScrollReveal delay={150}>
-              <div className="relative w-72 h-72 lg:w-96 lg:h-96">
-                {/* Outer glow rings */}
-                <div className="absolute inset-0 rounded-full border border-brand/10 animate-[spin_20s_linear_infinite]" />
-                <div className="absolute inset-4 rounded-full border border-brand/6 animate-[spin_15s_linear_infinite_reverse]" />
-                {/* Core orb */}
-                <div className="absolute inset-8 rounded-full about-orb flex items-center justify-center">
-                  <div className="text-center">
-                    <div className="text-5xl font-bold text-brand mb-1">50+</div>
-                    <div className="text-sm text-[var(--text-muted)] font-medium tracking-wide">Projects Shipped</div>
-                  </div>
-                </div>
-                {/* Orbiting dots */}
-                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-3 h-3 rounded-full bg-brand shadow-[0_0_12px_rgba(74,222,128,0.8)] animate-[spin_8s_linear_infinite]" />
-                <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-2 h-2 rounded-full bg-purple-400 shadow-[0_0_10px_rgba(139,92,246,0.8)] animate-[spin_12s_linear_infinite_reverse]" />
-                <div className="absolute left-0 top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-sky-400 shadow-[0_0_10px_rgba(56,189,248,0.8)] animate-[spin_10s_linear_infinite]" />
+          {/* Right: founder card */}
+          <ScrollReveal delay={150}>
+            <div className="glass-card p-10 flex flex-col gap-5">
+              <div className="w-20 h-20 rounded-2xl bg-brand/10 flex items-center justify-center text-brand text-3xl font-bold">
+                U
               </div>
-            </ScrollReveal>
-          </div>
-        </div>
+              <div>
+                <h3 className="text-xl font-bold mb-1">Ugan Saripudin</h3>
+                <p className="text-brand text-sm font-medium mb-4">Founder — GanzApps</p>
+                <p className="text-[var(
 
-        {/* Testimonials — rotating, using normal flow layout */}
-        <ScrollReveal>
-          <div className="max-w-3xl mx-auto">
-            <div className="glass-card p-10 md:p-14 text-center relative overflow-hidden">
-              {/* Background accent */}
-              <div className="absolute top-0 right-0 w-64 h-64 bg-brand/3 rounded-full blur-3xl pointer-events-none" />
-
-              {/* Quote icon */}
-              <div className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-brand/10 mb-6">
-                <Quote className="w-5 h-5 text-brand" fill="var(--primary)" />
-              </div>
-
-              {/* Stars */}
-              <div className="flex gap-1 justify-center mb-8">
-                {[1,2,3,4,5].map(n => (
-                  <Star key={n} className="w-4 h-4 text-brand" fill="var(--primary)" />
-                ))}
-              </div>
-
-              {/* Testimonial text — normal flow, no absolute overlapping */}
-              <div className="mb-12">
-                <p
-                  className="text-xl md:text-2xl font-medium leading-relaxed italic"
-                  style={{ color: "var(--heading-color)", opacity: 1 }}
-                >
-                  &ldquo;{testimonials[active].quote}&rdquo;
+--text-muted)] text-sm leading-relaxed">
+                  Tech Lead building AI-first products. Specializes in SaaS architecture, agentic AI systems, and rapid full-stack development. Available for projects that need real execution, not just slides.
                 </p>
               </div>
-
-              {/* Author — below text, no overlap */}
-              <div className="flex flex-col items-center gap-2">
-                <div className="w-11 h-11 rounded-full bg-brand/10 flex items-center justify-center text-brand font-bold text-sm">
-                  {testimonials[active].initials}
-                </div>
-                <p className="font-semibold text-sm" style={{ color: "var(--heading-color)" }}>
-                  {testimonials[active].author}
-                </p>
-                <p className="text-[var(--text-muted)] text-xs">{testimonials[active].role}</p>
-              </div>
-
-              {/* Dots */}
-              <div className="flex gap-2 justify-center mt-8">
-                {testimonials.map((_, i) => (
-                  <button
-                    key={i}
-                    onClick={() => setActive(i)}
-                    className={`h-1.5 rounded-full transition-all duration-300 ${
-                      i === active ? "w-6 bg-brand" : "w-1.5 bg-gray-600"
-                    }`}
-                    aria-label={`Testimonial ${i + 1}`}
-                  />
-                ))}
-              </div>
+              <a
+                href="https://ganzapps.my.id"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-brand text-sm font-medium hover:underline"
+              >
+                ganzapps.my.id →
+              </a>
             </div>
-          </div>
-        </ScrollReveal>
+          </ScrollReveal>
+        </div>
       </div>
     </section>
   );

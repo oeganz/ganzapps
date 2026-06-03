@@ -75,17 +75,6 @@ export default function Hero() {
             </a>
           </div>
 
-          {/* Trust signals */}
-          <div className="mt-10 sm:mt-12 pt-6 sm:pt-8 border-t" style={{ borderColor: "var(--border-color)" }}>
-            <p className="text-[10px] sm:text-xs uppercase tracking-widest mb-3 sm:mb-4" style={{ color: "var(--text-muted)" }}>Trusted by teams at</p>
-            <div className="flex flex-wrap items-center justify-center lg:justify-start gap-4 sm:gap-8 opacity-40">
-              {['StartupX', 'TechCorp', 'DataFlow', 'CloudBase', 'AI Labs'].map((brand) => (
-                <span key={brand} className="text-xs sm:text-sm font-semibold tracking-wide" style={{ color: "var(--text-secondary)" }}>
-                  {brand}
-                </span>
-              ))}
-            </div>
-          </div>
         </div>
       </div>
 
