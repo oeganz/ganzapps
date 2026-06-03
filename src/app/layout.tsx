@@ -65,7 +65,7 @@ export default function RootLayout({
               (function() {
                 var stored = localStorage.getItem('ganzapps-theme');
                 var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-                var theme = stored || (prefersDark ? 'dark' : 'light');
+                var theme = "dark"; // forced ? 'dark' : 'light');
                 document.documentElement.classList.add(theme);
               })();
             `,
