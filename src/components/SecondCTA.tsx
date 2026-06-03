@@ -11,7 +11,7 @@ export default function SecondCTA() {
           <div className="relative glass-card p-12 md:p-16 text-center overflow-hidden">
             {/* Gradient background glow */}
             <div className="absolute inset-0 bg-gradient-to-br from-brand/[0.06] via-transparent to-violet-500/[0.04] pointer-events-none" />
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[300px] bg-brand/[0.05] rounded-full blur-3xl pointer-events-none" />
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-[500px] h-[300px] bg-brand/[0.05] rounded-full blur-3xl pointer-events-none" />
 
             <div className="relative">
               <p className="text-brand font-semibold tracking-[0.2em] uppercase text-xs mb-5">

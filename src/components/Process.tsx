@@ -76,8 +76,8 @@ export default function Process() {
         </div>
 
         {/* Mobile horizontal scroll */}
-        <div className="md:hidden overflow-x-auto -mx-6 px-6 pb-4 scrollbar-hide">
-          <div className="flex gap-5 w-max">
+        <div className="md:hidden overflow-x-auto -mx-6 px-6 pb-4" style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}>
+          <div className="flex gap-5 w-max" style={{ WebkitOverflowScrolling: "touch" }}>
             {steps.map((step, i) => (
               <ScrollReveal key={step.title} delay={i * 80}>
                 <div className="glass-card p-7 w-64 flex-shrink-0">

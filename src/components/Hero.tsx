@@ -10,7 +10,7 @@ export default function Hero() {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Clean dark background with subtle radial gradient */}
-      <div className="absolute inset-0 bg-[var(--page-bg)]" />
+      <div className="absolute inset-0" style={{ backgroundColor: "var(--body-bg)" }} />
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[rgba(74,222,128,0.03)]" />
       
       {/* Subtle grid pattern */}
