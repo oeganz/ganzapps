@@ -91,7 +91,7 @@ export default function About() {
           </div>
         </div>
 
-        {/* Testimonials — rotating */}
+        {/* Testimonials — rotating, using normal flow layout */}
         <ScrollReveal>
           <div className="max-w-3xl mx-auto">
             <div className="glass-card p-10 md:p-14 text-center relative overflow-hidden">
@@ -110,46 +110,29 @@ export default function About() {
                 ))}
               </div>
 
-              {/* Testimonial text */}
-              <div className="relative min-h-[120px]">
-                {testimonials.map((t, i) => (
-                  <div
-                    key={i}
-                    className="absolute inset-0 transition-all duration-700 ease-out"
-                    style={{
-                      opacity: i === active ? 1 : 0,
-                      transform: i === active ? "translateY(0)" : "translateY(12px)",
-                      pointerEvents: i === active ? "auto" : "none",
-                    }}
-                  >
-                    <p className="text-xl md:text-2xl font-medium text-gray-200 leading-relaxed italic mb-8">
-                      &ldquo;{t.quote}&rdquo;
-                    </p>
-                  </div>
-                ))}
+              {/* Testimonial text — normal flow, no absolute overlapping */}
+              <div className="mb-12">
+                <p
+                  className="text-xl md:text-2xl font-medium leading-relaxed italic"
+                  style={{ color: "var(--heading-color)", opacity: 1 }}
+                >
+                  &ldquo;{testimonials[active].quote}&rdquo;
+                </p>
               </div>
 
-              {/* Author */}
-              {testimonials.map((t, i) => (
-                <div
-                  key={t.author}
-                  className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 transition-all duration-700"
-                  style={{
-                    opacity: i === active ? 1 : 0,
-                    transform: `translateX(-50%) translateY(${i === active ? 0 : 8}px)`,
-                    pointerEvents: i === active ? "auto" : "none",
-                  }}
-                >
-                  <div className="w-11 h-11 rounded-full bg-brand/10 flex items-center justify-center text-brand font-bold text-sm">
-                    {t.initials}
-                  </div>
-                  <p className="font-semibold text-white text-sm">{t.author}</p>
-                  <p className="text-gray-500 text-xs">{t.role}</p>
+              {/* Author — below text, no overlap */}
+              <div className="flex flex-col items-center gap-2">
+                <div className="w-11 h-11 rounded-full bg-brand/10 flex items-center justify-center text-brand font-bold text-sm">
+                  {testimonials[active].initials}
                 </div>
-              ))}
+                <p className="font-semibold text-sm" style={{ color: "var(--heading-color)" }}>
+                  {testimonials[active].author}
+                </p>
+                <p className="text-gray-500 text-xs">{testimonials[active].role}</p>
+              </div>
 
               {/* Dots */}
-              <div className="flex gap-2 justify-center mt-6">
+              <div className="flex gap-2 justify-center mt-8">
                 {testimonials.map((_, i) => (
                   <button
                     key={i}
