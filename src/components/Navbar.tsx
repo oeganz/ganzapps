@@ -61,7 +61,7 @@ export default function Navbar() {
     <>
       <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${
         scrolled
-          ? "bg-[#0a0a0a]/85 backdrop-blur-2xl border-b border-white/[0.06] shadow-[0_1px_30px_rgba(0,0,0,0.4)]"
+          ? "var(--nav-bg) backdrop-blur-2xl border-b border-white/[0.06] shadow-[0_1px_30px_rgba(0,0,0,0.4)]"
           : "bg-transparent border-b border-transparent"
       }`}>
         <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
@@ -73,7 +73,7 @@ export default function Navbar() {
               alt="GanzApps"
               className="h-10 w-10 rounded-full"
             />
-            <span className="text-lg font-bold text-white group-hover:text-brand transition-colors">
+            <span className="text-lg font-bold text-heading group-hover:text-brand transition-colors">
               GanzApps
             </span>
           </a>
@@ -87,7 +87,7 @@ export default function Navbar() {
                   key={link.href}
                   href={link.href}
                   className={`text-sm font-medium transition-colors relative group/link ${
-                    isActive ? "text-brand" : "text-gray-400 hover:text-white"
+                    isActive ? "text-brand" : "text-muted hover:text-heading"
                   }`}
                 >
                   {link.label}
@@ -114,7 +114,7 @@ export default function Navbar() {
           {/* Mobile hamburger */}
           <button
             onClick={() => setOpen(true)}
-            className="md:hidden text-gray-400 hover:text-white p-2 rounded-lg hover:bg-white/5 transition-colors"
+            className="md:hidden text-muted hover:text-heading p-2 rounded-lg hover:bg-white/10 transition-colors"
             aria-label="Open menu"
           >
             <Menu className="w-5 h-5" />
@@ -145,11 +145,11 @@ export default function Navbar() {
             <a href="#" className="flex items-center gap-3" onClick={() => setOpen(false)}>
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src="/logo-circle.png" alt="GanzApps" className="h-9 w-9 rounded-full" />
-              <span className="text-lg font-bold text-white">GanzApps</span>
+              <span className="text-lg font-bold text-heading">GanzApps</span>
             </a>
             <button
               onClick={() => setOpen(false)}
-              className="text-gray-400 hover:text-white p-2 rounded-lg hover:bg-white/5 transition-colors"
+              className="text-muted hover:text-heading p-2 rounded-lg hover:bg-white/10 transition-colors"
               aria-label="Close menu"
             >
               <X className="w-5 h-5" />
@@ -163,7 +163,7 @@ export default function Navbar() {
                 key={link.href}
                 href={link.href}
                 onClick={() => setOpen(false)}
-                className="mobile-nav-item py-4 text-xl font-semibold text-gray-300 hover:text-brand border-b border-white/[0.04] transition-colors"
+                className="mobile-nav-item py-4 text-xl font-semibold text-secondary hover:text-brand border-b border-white/[0.04] transition-colors"
                 style={{ animationDelay: `${i * 50}ms` }}
               >
                 {link.label}

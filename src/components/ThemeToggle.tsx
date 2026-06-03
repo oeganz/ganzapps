@@ -3,57 +3,48 @@ import { useState, useEffect } from "react";
 import { Sun, Moon } from "lucide-react";
 
 export default function ThemeToggle() {
-  const [mode, setMode] = useState<"dark" | "light" | "system">("system");
-  const [resolved, setResolved] = useState<"dark" | "light">("dark");
+  const [isDark, setIsDark] = useState(true);
 
   useEffect(() => {
-    // Detect initial
     const stored = localStorage.getItem("ganzapps-theme");
-    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-    const initial = stored === "light" ? "light" : stored === "dark" ? "dark" : (prefersDark ? "dark" : "light");
-    setMode(stored as "dark"|"light"|"system" || "system");
-    setResolved(initial);
-    applyTheme(initial);
+    if (stored) {
+      setIsDark(stored !== "light");
+    } else {
+      const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+      setIsDark(prefersDark);
+    }
 
-    // Listen for system changes
+    // Listen for system preference changes
     const mq = window.matchMedia("(prefers-color-scheme: dark)");
     const onChange = () => {
-      if (!localStorage.getItem("ganzapps-theme") || localStorage.getItem("ganzapps-theme") === "system") {
-        const next = mq.matches ? "dark" : "light";
-        setResolved(next);
-        applyTheme(next);
+      if (!localStorage.getItem("ganzapps-theme")) {
+        setIsDark(mq.matches);
       }
     };
     mq.addEventListener("change", onChange);
     return () => mq.removeEventListener("change", onChange);
   }, []);
 
-  const applyTheme = (t: "dark" | "light") => {
-    document.documentElement.classList.remove("dark", "light");
-    document.documentElement.classList.add(t);
-    // Also set data attribute for CSS targeting
-    document.documentElement.setAttribute("data-theme", t);
-  };
-
-  const cycle = () => {
-    const next = resolved === "dark" ? "light" : "dark";
-    setResolved(next);
-    setMode(next);
-    localStorage.setItem("ganzapps-theme", next);
-    applyTheme(next);
+  const toggle = () => {
+    const next = !isDark;
+    setIsDark(next);
+    localStorage.setItem("ganzapps-theme", next ? "dark" : "light");
+    if (next) {
+      document.documentElement.classList.add("dark");
+      document.documentElement.classList.remove("light");
+    } else {
+      document.documentElement.classList.remove("dark");
+      document.documentElement.classList.add("light");
+    }
   };
 
   return (
     <button
-      onClick={cycle}
-      aria-label={`Theme: ${resolved}. Click to toggle.`}
+      onClick={toggle}
+      aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
       className="text-gray-400 hover:text-white p-2 rounded-lg hover:bg-white/5 transition-all cursor-pointer"
     >
-      {resolved === "dark" ? (
-        <Sun className="w-4 h-4" />
-      ) : (
-        <Moon className="w-4 h-4" />
-      )}
+      {isDark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
     </button>
   );
 }
