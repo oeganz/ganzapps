@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { X, Menu } from "lucide-react";
+import ThemeToggle from "./ThemeToggle";
 
 const navLinks = [
   { href: "#services", label: "Services" },
@@ -109,6 +110,7 @@ export default function Navbar() {
             </a>
           </div>
 
+          <ThemeToggle />
           {/* Mobile hamburger */}
           <button
             onClick={() => setOpen(true)}
