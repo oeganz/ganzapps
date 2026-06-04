@@ -20,12 +20,12 @@ export default function About() {
             </ScrollReveal>
             <ScrollReveal delay={100}>
               <p className="text-lg text-[var(--text-muted)] leading-relaxed mb-6">
-                GanzApps is a lean, AI-powered development studio. We don't just
+                GanzApps is a lean, AI-powered development studio. We don&apos;t just
                 consult — we build. Every project ships with production-grade code,
                 automated pipelines, and AI agents woven into the stack from day one.
               </p>
               <p className="text-lg text-[var(--text-muted)] leading-relaxed">
-                Whether you're launching a SaaS product, digitizing operations, or
+                Whether you&apos;re launching a SaaS product, digitizing operations, or
                 deploying autonomous agents — we move fast, cut complexity, and deliver
                 systems that run themselves.
               </p>
@@ -35,25 +35,28 @@ export default function About() {
           {/* Right: founder card */}
           <ScrollReveal delay={150}>
             <div className="glass-card p-10 flex flex-col gap-5">
-              <div className="w-20 h-20 rounded-2xl bg-brand/10 flex items-center justify-center text-brand text-3xl font-bold">
-                U
-              </div>
+              {/* Real avatar */}
+              <img
+                src="https://ugan.ganzapps.my.id/images/profile-real.webp"
+                alt="Ugan Saripudin"
+                className="w-20 h-20 rounded-2xl object-cover"
+              />
               <div>
                 <h3 className="text-xl font-bold mb-1">Ugan Saripudin</h3>
                 <p className="text-brand text-sm font-medium mb-4">Founder — GanzApps</p>
-                <p className="text-[var(
-
---text-muted)] text-sm leading-relaxed">
-                  Tech Lead building AI-first products. Specializes in SaaS architecture, agentic AI systems, and rapid full-stack development. Available for projects that need real execution, not just slides.
+                <p className="text-[var(--text-muted)] text-sm leading-relaxed">
+                  Tech Lead building AI-first products. Specializes in SaaS architecture,
+                  agentic AI systems, and rapid full-stack development. Available for
+                  projects that need real execution, not just slides.
                 </p>
               </div>
               <a
-                href="https://ganzapps.my.id"
+                href="https://ugan.ganzapps.my.id"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-brand text-sm font-medium hover:underline"
               >
-                ganzapps.my.id →
+                ugan.ganzapps.my.id →
               </a>
             </div>
           </ScrollReveal>
