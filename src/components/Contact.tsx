@@ -30,7 +30,7 @@ export default function Contact() {
               className="btn-primary text-base"
             >
               <Mail className="w-5 h-5" strokeWidth={1.5} />
-              oeganz1999@gmail.com
+              Contact Us
             </a>
           </div>
         </ScrollReveal>

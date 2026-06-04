@@ -49,7 +49,7 @@ export default function Logo({ variant = "full", className, style, height = 30 }
           color: "#F8FAFC",
         }}
       >
-        Ganz<span style={{ color: "#4F7CFF" }}>Apps</span>
+        Ganz<span style={{ color: "var(--primary)" }}>Apps</span>
       </span>
     </span>
   );
