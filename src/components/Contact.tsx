@@ -27,7 +27,7 @@ export default function Contact() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
               href="mailto:oeganz1999@gmail.com"
-              className="btn-primary text-base"
+              className="btn-primary text-base flex-row"
             >
               <Mail className="w-5 h-5" strokeWidth={1.5} />
               Contact Us
