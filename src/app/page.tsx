@@ -4,10 +4,9 @@ import Stats from "@/components/Stats";
 import ClientLogos from "@/components/ClientLogos";
 import Services from "@/components/Services";
 import Process from "@/components/Process";
-import About from "@/components/About";
-import TechStack from "@/components/TechStack";
 import Portfolio from "@/components/Portfolio";
-import Testimonials from "@/components/Testimonials";
+import TechStack from "@/components/TechStack";
+import About from "@/components/About";
 import Pricing from "@/components/Pricing";
 import FAQ from "@/components/FAQ";
 import SecondCTA from "@/components/SecondCTA";
@@ -25,10 +24,9 @@ export default function Home() {
       <ClientLogos />
       <Services />
       <Process />
-      <About />
-      <TechStack />
       <Portfolio />
-      <Testimonials />
+      <TechStack />
+      <About />
       <Pricing />
       <FAQ />
       <SecondCTA />
