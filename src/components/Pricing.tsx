@@ -72,14 +72,14 @@ export default function Pricing() {
               <div
                 className={`glass-card relative p-8 flex flex-col h-full ${
                   plan.highlight
-                    ? "border-brand/30 shadow-[0_0_60px_-12px_rgba(74,222,128,0.22)]"
+                    ? "border-brand/30 shadow-[0_0_60px_-12px_rgba(79,124,255,0.22)]"
                     : ""
                 }`}
               >
                 {/* Most Popular badge */}
                 {plan.highlight && (
                   <div className="absolute -top-4 left-1/2 -translate-x-1/2">
-                    <span className="bg-brand text-black text-xs font-bold px-4 py-1.5 rounded-full inline-flex items-center gap-1.5">
+                    <span className="bg-primary text-white text-xs font-bold px-4 py-1.5 rounded-full inline-flex items-center gap-1.5">
                       <Zap className="w-3 h-3 fill-black" strokeWidth={0} />
                       Most Popular
                     </span>
@@ -117,8 +117,8 @@ export default function Pricing() {
                   href="#contact"
                   className={`block w-full text-center font-semibold text-sm px-6 py-3.5 rounded-xl transition-all ${
                     plan.ctaVariant === "primary"
-                      ? "bg-brand text-black hover:bg-emerald-400 hover:shadow-[0_0_30px_-5px_rgba(74,222,128,0.5)]"
-                      : "border border-white/[0.1] var(--text-body) hover:border-brand/30 hover:text-white hover:shadow-[0_0_30px_-8px_rgba(74,222,128,0.2)]"
+                      ? "bg-primary text-white hover:bg-primary-deep hover:shadow-[0_0_30px_-5px_rgba(79,124,255,0.5)]"
+                      : "border border-white/[0.1] var(--text-body) hover:border-brand/30 hover:text-white hover:shadow-[0_0_30px_-8px_rgba(79,124,255,0.2)]"
                   }`}
                 >
                   {plan.cta}

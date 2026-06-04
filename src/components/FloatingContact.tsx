@@ -25,7 +25,7 @@ export default function FloatingContact() {
       <a
         href="mailto:oeganz1999@gmail.com"
         aria-label="Contact us"
-        className="relative flex items-center justify-center w-14 h-14 rounded-full bg-brand text-black hover:bg-emerald-400 hover:scale-110 transition-all duration-300 shadow-[0_0_30px_-5px_rgba(74,222,128,0.6)]"
+        className="relative flex items-center justify-center w-14 h-14 rounded-full bg-primary text-white hover:bg-primary-deep hover:scale-110 transition-all duration-300 shadow-[0_0_30px_-5px_rgba(79,124,255,0.6)]"
       >
         <MessageCircle className="w-6 h-6" strokeWidth={1.5} />
       </a>

@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { X, Menu } from "lucide-react";
-
+import Logo from "./Logo";
 
 const navLinks = [
   { href: "#services", label: "Services" },
@@ -24,7 +24,6 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Close on ESC
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") setOpen(false);
@@ -33,13 +32,11 @@ export default function Navbar() {
     return () => window.removeEventListener("keydown", onKey);
   }, []);
 
-  // Lock body scroll when menu open
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
     return () => { document.body.style.overflow = ""; };
   }, [open]);
 
-  // Scroll spy
   useEffect(() => {
     const sections = navLinks.map(l => l.href.slice(1));
     const observer = new IntersectionObserver(
@@ -67,12 +64,7 @@ export default function Navbar() {
         <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
           {/* Logo */}
           <a href="#" className="flex items-center gap-3 group">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="/logo-circle.png"
-              alt="GanzApps"
-              className="h-10 w-10 rounded-full"
-            />
+            <Logo variant="icon" height={32} />
             <span className="text-lg font-bold text-heading group-hover:text-brand transition-colors">
               GanzApps
             </span>
@@ -92,7 +84,7 @@ export default function Navbar() {
                 >
                   {link.label}
                   {isActive && (
-                    <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-brand shadow-[0_0_8px_rgba(74,222,128,0.8)]" />
+                    <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-brand shadow-[0_0_8px_rgba(79,124,255,0.8)]" />
                   )}
                   <span className="absolute bottom-0 left-0 w-0 h-px bg-brand transition-all duration-300 group-hover/link:w-full" />
                 </a>
@@ -104,13 +96,12 @@ export default function Navbar() {
           <div className="hidden md:block">
             <a
               href="#contact"
-              className="bg-brand text-black font-semibold text-sm px-5 py-2.5 rounded-xl hover:bg-emerald-400 transition-all hover:shadow-[0_0_25px_-5px_rgba(74,222,128,0.5)]"
+              className="btn-primary text-sm font-semibold px-5 py-2.5 rounded-xl"
             >
               Get Started
             </a>
           </div>
 
-          <div />
           {/* Mobile hamburger */}
           <button
             onClick={() => setOpen(true)}
@@ -128,23 +119,19 @@ export default function Navbar() {
           open ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
         }`}
       >
-        {/* Backdrop */}
         <div
           className="absolute inset-0 bg-[#0a0a0a]/95 backdrop-blur-2xl"
           onClick={() => setOpen(false)}
         />
-        
-        {/* Menu panel */}
+
         <div
           className={`absolute inset-x-0 top-0 flex flex-col transition-all duration-300 ease-out ${
             open ? "translate-y-0" : "-translate-y-full"
           }`}
         >
-          {/* Top bar */}
           <div className="flex items-center justify-between px-6 py-5 border-b border-white/[0.06]">
             <a href="#" className="flex items-center gap-3" onClick={() => setOpen(false)}>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/logo-circle.png" alt="GanzApps" className="h-9 w-9 rounded-full" />
+              <Logo variant="icon" height={28} />
               <span className="text-lg font-bold text-heading">GanzApps</span>
             </a>
             <button
@@ -156,7 +143,6 @@ export default function Navbar() {
             </button>
           </div>
 
-          {/* Nav links */}
           <div className="flex flex-col px-6 py-8 gap-1">
             {navLinks.map((link, i) => (
               <a
@@ -171,12 +157,11 @@ export default function Navbar() {
             ))}
           </div>
 
-          {/* Bottom CTA */}
           <div className="px-6 pb-10">
             <a
               href="#contact"
               onClick={() => setOpen(false)}
-              className="block w-full bg-brand text-black font-bold text-center px-6 py-4 rounded-xl hover:bg-emerald-400 transition-all"
+              className="block w-full btn-primary font-bold text-center px-6 py-4 rounded-xl"
             >
               Start Your Project →
             </a>

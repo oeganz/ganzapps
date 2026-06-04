@@ -11,12 +11,12 @@ export default function Hero() {
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Clean dark background */}
       <div className="absolute inset-0" style={{ backgroundColor: "var(--body-bg)" }} />
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[rgba(74,222,128,0.03)]" />
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[rgba(79,124,255,0.03)]" />
       
       {/* Subtle grid pattern */}
       <div className="absolute inset-0 opacity-[0.03]" style={{
-        backgroundImage: `linear-gradient(rgba(74,222,128,0.3) 1px, transparent 1px),
-                          linear-gradient(90deg, rgba(74,222,128,0.3) 1px, transparent 1px)`,
+        backgroundImage: `linear-gradient(rgba(79,124,255,0.05) 1px, transparent 1px),
+                          linear-gradient(90deg, rgba(79,124,255,0.05) 1px, transparent 1px)`,
         backgroundSize: '60px 60px'
       }} />
 
@@ -43,7 +43,7 @@ export default function Hero() {
           
           {/* Badge */}
           <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-2 rounded-full border border-brand/20 bg-brand/5 mb-6 sm:mb-8">
-            <Zap className="w-3.5 h-3.5 text-brand" fill="#4ADE80" />
+            <Zap className="w-3.5 h-3.5 text-brand" fill="#4F7CFF" />
             <span className="text-brand text-[10px] sm:text-xs font-semibold tracking-widest uppercase">
               AI-Powered Development Studio
             </span>
