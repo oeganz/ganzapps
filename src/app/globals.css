@@ -108,9 +108,11 @@ html.light { background-color: var(--ink); }
 
 /* ── Buttons ── */
 .btn-primary {
-  display: inline-flex;
+  display: inline-flex !important;
   align-items: center;
   gap: 0.5rem;
+  flex-direction: row !important;
+  flex-shrink: 0;
   background: var(--primary);
   color: #fff;
   border-radius: 8px;
