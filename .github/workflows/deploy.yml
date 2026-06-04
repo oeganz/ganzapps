@@ -16,9 +16,4 @@ jobs:
           cache: 'npm'
       - run: npm ci
       - run: npm run build
-      - uses: vercel/actions/deploy@v2
-        with:
-          vercel-token: ${{ secrets.VERCEL_TOKEN }}
-          vercel-org-id: team_hiVmLBM7pcBTEJkgjcxFqMNl
-          vercel-project-id: prj_XO8lefIjnaftYeNFTBoDimOqaK9t
-          vercel-args: '--prod'
+      - run: npx vercel deploy --prod --yes --token=${{ secrets.VERCEL_TOKEN }}
