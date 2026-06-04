@@ -64,10 +64,7 @@ export default function Navbar() {
         <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
           {/* Logo */}
           <a href="#" className="flex items-center gap-3 group">
-            <Logo variant="icon" height={32} />
-            <span className="text-lg font-bold text-heading group-hover:text-brand transition-colors">
-              GanzApps
-            </span>
+            <Logo height={32} />
           </a>
 
           {/* Desktop links */}
@@ -131,8 +128,7 @@ export default function Navbar() {
         >
           <div className="flex items-center justify-between px-6 py-5 border-b border-white/[0.06]">
             <a href="#" className="flex items-center gap-3" onClick={() => setOpen(false)}>
-              <Logo variant="icon" height={28} />
-              <span className="text-lg font-bold text-heading">GanzApps</span>
+              <Logo height={28} />
             </a>
             <button
               onClick={() => setOpen(false)}
