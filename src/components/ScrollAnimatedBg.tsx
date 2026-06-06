@@ -4,6 +4,26 @@ import { useEffect, useRef } from "react";
 
 type AnimationType = "particles" | "orbs" | "grid" | "lines" | "ribbon";
 
+// Helper: draw a horizontal gradient line that "draws" based on scroll progress
+function drawScrollLine(ctx: CanvasRenderingContext2D, W: number, H: number, pg: number) {
+  if (pg < 0.01) return;
+  const lineY = H * 0.5;
+  const lineWidth = pg * W * 0.6;
+  const lineX = (W - lineWidth) / 2;
+  const g = ctx.createLinearGradient(lineX, 0, lineX + lineWidth, 0);
+  g.addColorStop(0, "rgba(79,124,255,0)");
+  g.addColorStop(0.15, `rgba(79,124,255,${0.5 * pg})`);
+  g.addColorStop(0.5, `rgba(139,92,246,${0.6 * pg})`);
+  g.addColorStop(0.85, `rgba(79,124,255,${0.5 * pg})`);
+  g.addColorStop(1, "rgba(79,124,255,0)");
+  ctx.beginPath();
+  ctx.moveTo(lineX, lineY);
+  ctx.lineTo(lineX + lineWidth, lineY);
+  ctx.strokeStyle = g;
+  ctx.lineWidth = 1.5;
+  ctx.stroke();
+}
+
 function runParticles(canvas: HTMLCanvasElement, getProgress: () => number) {
   const ctx = canvas.getContext("2d");
   if (!ctx) return;
@@ -17,7 +37,7 @@ function runParticles(canvas: HTMLCanvasElement, getProgress: () => number) {
 
   const ps = Array.from({ length: N }, () => ({
     x: 0, y: 0, size: 1 + Math.random() * 2.5,
-    speed: 0.2 + Math.random() * 0.7, opacity: 0.08 + Math.random() * 0.2,
+    speed: 0.2 + Math.random() * 0.7, opacity: 0.12 + Math.random() * 0.28,
     hue: hues[Math.floor(Math.random() * hues.length)],
     drift: (Math.random() - 0.5) * 0.6, phase: Math.random() * Math.PI * 2,
   }));
@@ -39,13 +59,14 @@ function runParticles(canvas: HTMLCanvasElement, getProgress: () => number) {
       if (p.y < -10) { p.y = H + 10; p.x = Math.random() * W; }
       if (p.x < 0) p.x = W; if (p.x > W) p.x = 0;
       if (p.y === 0) { p.y = Math.random() * H; p.x = Math.random() * W; }
-      const a = p.opacity * (0.4 + sp * 0.6);
+      const a = p.opacity * (0.5 + sp * 0.5);
       const pulse = 0.6 + Math.sin(t * 2 + p.phase) * 0.4;
       ctx.beginPath();
       ctx.arc(p.x, p.y, p.size * (1 + sp * 0.5), 0, Math.PI * 2);
-      ctx.fillStyle = `hsla(${p.hue},75%,65%,${a * pulse})`;
+      ctx.fillStyle = `hsla(${p.hue},75%,70%,${a * pulse})`;
       ctx.fill();
     }
+    drawScrollLine(ctx, W, H, sp);
   };
   draw();
   return () => { cancelAnimationFrame(raf); obs.disconnect(); };
@@ -57,7 +78,7 @@ function runOrbs(canvas: HTMLCanvasElement, getProgress: () => number) {
   let raf = 0;
   let W = 0;
   let H = 0;
-  const cols = [{ h: 220, s: 80, l: 65 }, { h: 260, s: 75, l: 65 }, { h: 190, s: 80, l: 60 }];
+  const cols = [{ h: 220, s: 80, l: 70 }, { h: 260, s: 75, l: 70 }, { h: 190, s: 80, l: 65 }];
 
   const resize = () => { W = canvas.offsetWidth; H = canvas.offsetHeight; canvas.width = W; canvas.height = H; };
   resize();
@@ -84,13 +105,14 @@ function runOrbs(canvas: HTMLCanvasElement, getProgress: () => number) {
       o.y = o.oy + Math.cos(t * o.speed * 0.7 + o.phase) * (30 + sp * 20);
       const sz = o.size * (1 + sp * 0.3);
       const g = ctx.createRadialGradient(o.x, o.y, 0, o.x, o.y, sz);
-      g.addColorStop(0, `hsla(${o.color.h},${o.color.s}%,${o.color.l}%,${0.06 + sp * 0.04})`);
+      g.addColorStop(0, `hsla(${o.color.h},${o.color.s}%,${o.color.l}%,${0.1 + sp * 0.06})`);
       g.addColorStop(1, "transparent");
       ctx.fillStyle = g;
       ctx.beginPath();
       ctx.arc(o.x, o.y, sz, 0, Math.PI * 2);
       ctx.fill();
     }
+    drawScrollLine(ctx, W, H, sp);
   };
   draw();
   return () => { cancelAnimationFrame(raf); obs.disconnect(); };
@@ -125,11 +147,12 @@ function runGrid(canvas: HTMLCanvasElement, getProgress: () => number) {
         const y = r * sp2;
         const wave = Math.sin(t * 0.4 + c * 0.25 + r * 0.25) * 0.5 + 0.5;
         const sz = 1.5 + wave * (1 + pg);
-        const a = (0.02 + wave * 0.05) * (0.3 + pg * 0.7);
+        const a = (0.03 + wave * 0.07) * (0.4 + pg * 0.6);
         ctx.fillStyle = `rgba(79,124,255,${a})`;
         ctx.fillRect(x - sz / 2, y - sz / 2, sz, sz);
       }
     }
+    drawScrollLine(ctx, W, H, pg);
   };
   draw();
   return () => { cancelAnimationFrame(raf); obs.disconnect(); };
@@ -149,7 +172,7 @@ function runLines(canvas: HTMLCanvasElement, getProgress: () => number) {
   const ls = Array.from({ length: N }, () => ({
     x: 0, y: 0, len: 30 + Math.random() * 70,
     angle: Math.random() * Math.PI * 2, speed: 0.2 + Math.random() * 0.5,
-    opacity: 0.04 + Math.random() * 0.12, hue: 220 + Math.random() * 40,
+    opacity: 0.06 + Math.random() * 0.15, hue: 220 + Math.random() * 40,
   }));
   ls.forEach(l => { l.x = Math.random() * 1000; l.y = Math.random() * 1000; });
 
@@ -171,10 +194,11 @@ function runLines(canvas: HTMLCanvasElement, getProgress: () => number) {
       ctx.beginPath();
       ctx.moveTo(l.x, l.y);
       ctx.lineTo(l.x + Math.cos(l.angle) * l.len, l.y + Math.sin(l.angle) * l.len);
-      ctx.strokeStyle = `hsla(${l.hue},80%,65%,${l.opacity * (0.4 + pg * 0.6)})`;
+      ctx.strokeStyle = `hsla(${l.hue},80%,70%,${l.opacity * (0.5 + pg * 0.5)})`;
       ctx.lineWidth = 0.5 + pg * 0.5;
       ctx.stroke();
     }
+    drawScrollLine(ctx, W, H, pg);
   };
   draw();
   return () => { cancelAnimationFrame(raf); obs.disconnect(); };
@@ -210,10 +234,11 @@ function runRibbon(canvas: HTMLCanvasElement, getProgress: () => number) {
         const y = yB + Math.sin(x * freq + t * (0.5 + band * 0.2) + pg * 3) * amp * (0.5 + pg * 0.5);
         if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
       }
-      ctx.strokeStyle = `rgba(79,124,255,${(0.03 + band * 0.015) * (0.4 + pg * 0.6)})`;
+      ctx.strokeStyle = `rgba(79,124,255,${(0.04 + band * 0.02) * (0.5 + pg * 0.5)})`;
       ctx.lineWidth = 1 + pg;
       ctx.stroke();
     }
+    drawScrollLine(ctx, W, H, pg);
   };
   draw();
   return () => { cancelAnimationFrame(raf); obs.disconnect(); };
@@ -230,7 +255,6 @@ export default function ScrollAnimatedBg({ type = "particles" }: ScrollAnimatedB
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    // Track scroll progress based on the canvas element's own viewport position
     const updateProgress = () => {
       const rect = canvas.getBoundingClientRect();
       const vh = window.innerHeight;
