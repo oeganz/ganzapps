@@ -25,46 +25,46 @@ export default function Home() {
       <Stats />
 
       {/* ClientLogos + floating orbs */}
-      <div className="relative">
-        <ScrollAnimatedBg type="orbs" density={3} />
+      <section id="clients" className="relative overflow-hidden">
+        <ScrollAnimatedBg type="orbs" />
         <ClientLogos />
-      </div>
+      </section>
 
       {/* Services + wave grid */}
-      <div className="relative">
-        <ScrollAnimatedBg type="grid" density={40} />
+      <section id="services" className="relative overflow-hidden">
+        <ScrollAnimatedBg type="grid" />
         <Services />
-      </div>
+      </section>
 
       {/* Process + floating lines */}
-      <div className="relative overflow-hidden">
-        <ScrollAnimatedBg type="lines" density={25} />
+      <section id="process" className="relative overflow-hidden">
+        <ScrollAnimatedBg type="lines" />
         <Process />
-      </div>
+      </section>
 
       {/* Portfolio + particles */}
-      <div className="relative">
-        <ScrollAnimatedBg type="particles" density={20} />
+      <section id="portfolio" className="relative overflow-hidden">
+        <ScrollAnimatedBg type="particles" />
         <Portfolio />
-      </div>
+      </section>
 
       {/* TechStack + wave grid */}
-      <div className="relative">
-        <ScrollAnimatedBg type="grid" density={50} />
+      <section id="techstack" className="relative overflow-hidden">
+        <ScrollAnimatedBg type="grid" />
         <TechStack />
-      </div>
+      </section>
 
-      {/* About + orbs */}
-      <div className="relative">
-        <ScrollAnimatedBg type="orbs" density={4} />
+      {/* About + ribbon/waves */}
+      <section id="about" className="relative overflow-hidden">
+        <ScrollAnimatedBg type="ribbon" />
         <About />
-      </div>
+      </section>
 
       {/* FAQ + particles */}
-      <div className="relative">
-        <ScrollAnimatedBg type="particles" density={15} />
+      <section id="faq" className="relative overflow-hidden">
+        <ScrollAnimatedBg type="particles" />
         <FAQ />
-      </div>
+      </section>
 
       <SecondCTA />
       <Contact />
