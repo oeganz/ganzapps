@@ -23,114 +23,45 @@ function isWebGLAvailable(): boolean {
   }
 }
 
-function HeroFallback() {
+const WORD_SETS = [
+  ["AI Products", "AI Agents", "Your Future"],
+  ["Securely", "Quality", "It Smart"],
+  ["More Time", "The Code", "Your Future"],
+];
+
+function Typewriter({ words, delay }: { words: string[]; delay: number }) {
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      <div
-        className="absolute inset-0"
-        style={{
-          background: [
-            "radial-gradient(ellipse at 30% 50%, rgba(79,124,255,0.12) 0%, transparent 60%)",
-            "radial-gradient(ellipse at 80% 30%, rgba(139,92,246,0.10) 0%, transparent 50%)",
-            "radial-gradient(ellipse at 60% 80%, rgba(34,211,238,0.06) 0%, transparent 40%)",
-            "#0A0E1A",
-          ].join(", "),
-        }}
-      />
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          backgroundImage: `
-            linear-gradient(rgba(79,124,255,0.04) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(79,124,255,0.04) 1px, transparent 1px)
-          `,
-          backgroundSize: "60px 60px",
-        }}
-      />
-      <div
-        className="absolute rounded-full"
-        style={{
-          width: 300, height: 300, top: "20%", right: "15%",
-          background: "radial-gradient(circle, rgba(79,124,255,0.15) 0%, transparent 70%)",
-          filter: "blur(40px)",
-        }}
-      />
-      <div
-        className="absolute rounded-full"
-        style={{
-          width: 200, height: 200, bottom: "25%", right: "30%",
-          background: "radial-gradient(circle, rgba(139,92,246,0.12) 0%, transparent 70%)",
-          filter: "blur(30px)",
-        }}
-      />
-      <div
-        className="absolute rounded-full"
-        style={{
-          width: 150, height: 150, top: "40%", left: "40%",
-          background: "radial-gradient(circle, rgba(34,211,238,0.08) 0%, transparent 70%)",
-          filter: "blur(25px)",
-        }}
-      />
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          background: "linear-gradient(to right, #0A0E1A 0%, rgba(10,14,26,0.80) 45%, rgba(10,14,26,0.30) 70%, transparent 100%)",
-          zIndex: 1,
-        }}
-      />
-      <div
-        className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 pt-20 sm:pt-24 w-full"
-        style={{ zIndex: 10 }}
-      >
-        <div className="text-center lg:text-left">
-          <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-2 rounded-full border border-brand/20 bg-brand/5 mb-6 sm:mb-8">
-            <Zap className="w-3.5 h-3.5 text-brand" fill="#4F7CFF" />
-            <span className="text-brand text-[10px] sm:text-xs font-semibold tracking-widest uppercase">
-              AI DEVELOPMENT STUDIO
-            </span>
-          </div>
-
-          <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold tracking-tight leading-[1.1] mb-6">
-            <div className="hero-line">We Build AI Products.</div>
-            <div className="hero-line">We Ship Them.</div>
-            <div className="hero-line">You Own Them.</div>
-          </h1>
-
-          <p className="text-base sm:text-lg text-[#CBD5E1] max-w-xl mb-8 leading-relaxed">
-            AI-first development studio building SaaS products, autonomous agents, and digital systems — from spark to production. No slides. No consultants. Real builders.
-          </p>
-
-          <div className="flex flex-col sm:flex-row gap-4 justify-start">
-            <a href="#contact" className="btn-gradient text-sm px-6 py-3 inline-flex items-center gap-2">
-              Start a Project →
-            </a>
-            <a href="#portfolio" className="btn-secondary text-sm px-6 py-3 inline-flex items-center gap-2">
-              See Our Capabilities
-            </a>
-          </div>
-        </div>
-      </div>
-    </section>
+    <span className="relative inline-block" style={{ minWidth: "5ch" }}>
+      {words.map((word, i) => (
+        <span
+          key={word}
+          className="typewriter"
+          style={{
+            animationDelay: `${delay + i * (7 / 3)}s`,
+            animationFillMode: "both",
+            display: i === 0 ? "inline-block" : "none",
+          }}
+        >
+          {word}
+        </span>
+      ))}
+    </span>
   );
 }
 
 export default function Hero3D() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const rendererRef = useRef<THREE.WebGLRenderer | null>(null);
-  const sceneRef = useRef<THREE.Scene | null>(null);
-  const cameraRef = useRef<THREE.PerspectiveCamera | null>(null);
+  const [webglOk, setWebglOk] = useState(true);
   const objectsRef = useRef<FloatingObject[]>([]);
   const mouseRef = useRef({ x: 0, y: 0 });
   const targetMouseRef = useRef({ x: 0, y: 0 });
   const rafRef = useRef<number>(0);
-  const [webglOk, setWebglOk] = useState(true);
 
   useEffect(() => {
     if (!isWebGLAvailable()) {
       setWebglOk(false);
       return;
     }
-    setWebglOk(true);
 
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -140,14 +71,15 @@ export default function Hero3D() {
       renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
       renderer.setSize(canvas.clientWidth, canvas.clientHeight);
       renderer.setClearColor(0x000000, 0);
-      rendererRef.current = renderer;
 
       const scene = new THREE.Scene();
-      sceneRef.current = scene;
-
-      const camera = new THREE.PerspectiveCamera(60, canvas.clientWidth / canvas.clientHeight, 0.1, 100);
+      const camera = new THREE.PerspectiveCamera(
+        60,
+        canvas.clientWidth / canvas.clientHeight,
+        0.1,
+        100
+      );
       camera.position.set(0, 0, 6);
-      cameraRef.current = camera;
 
       const matBlue = new THREE.MeshStandardMaterial({ color: 0x4f7cff, transparent: true, opacity: 0.35 });
       const matViolet = new THREE.MeshStandardMaterial({ color: 0x8b5cf6, transparent: true, opacity: 0.35 });
@@ -180,7 +112,11 @@ export default function Hero3D() {
         mesh.rotation.set(Math.random() * Math.PI, Math.random() * Math.PI, Math.random() * Math.PI);
         objects.push({
           mesh,
-          velocity: new THREE.Vector3((Math.random() - 0.5) * 0.003, (Math.random() - 0.5) * 0.003, 0),
+          velocity: new THREE.Vector3(
+            (Math.random() - 0.5) * 0.003,
+            (Math.random() - 0.5) * 0.003,
+            0
+          ),
           rotationSpeed: new THREE.Vector3(
             (Math.random() - 0.5) * 0.008,
             (Math.random() - 0.5) * 0.008,
@@ -258,25 +194,21 @@ export default function Hero3D() {
         allGeos.forEach((g) => g.dispose());
         allMats.forEach((m) => m.dispose());
         renderer.dispose();
-        rendererRef.current = null;
-        sceneRef.current = null;
-        cameraRef.current = null;
       };
     } catch {
       setWebglOk(false);
     }
   }, []);
 
-  if (!webglOk) return <HeroFallback />;
-
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       <div className="absolute inset-0" style={{ background: "#0A0E1A" }} />
-      <canvas ref={canvasRef} className="absolute inset-0 w-full h-full" style={{ display: "block" }} />
+      <canvas ref={canvasRef} className="absolute inset-0 w-full h-full" style={{ display: webglOk ? "block" : "none" }} />
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
-          background: "linear-gradient(to right, #0A0E1A 0%, rgba(10,14,26,0.75) 45%, rgba(10,14,26,0.20) 70%, transparent 100%)",
+          background:
+            "linear-gradient(to right, #0A0E1A 0%, rgba(10,14,26,0.75) 45%, rgba(10,14,26,0.20) 70%, transparent 100%)",
           zIndex: 1,
         }}
       />
@@ -293,40 +225,28 @@ export default function Hero3D() {
             </span>
           </div>
 
-          {/* H1 — 3 lines, each staggered */}
-          <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold tracking-tight leading-[1.1] mb-6">
+          {/* H1 — single line typewriter */}
+          <h1 className="text-3xl sm:text-4xl lg:text-6xl xl:text-7xl font-bold tracking-tight leading-[1.1] mb-6">
             {/* Line 1 */}
-            <div className="hero-line flex flex-wrap items-baseline gap-2">
-              <span className="text-[#F8FAFC]">We Build&nbsp;</span>
-              <span className="word-swap">
-                <span className="word-swap-inner">AI Products.</span>
-                <span className="word-swap-inner">Your Business.</span>
-                <span className="word-swap-inner">It Real.</span>
-              </span>
+            <div className="hero-tagline text-center lg:text-left">
+              <span className="hero-tagline-item text-[#F8FAFC]">We Build.&nbsp;</span>
+              <span className="hero-tagline-item"><Typewriter words={WORD_SETS[0]} delay={0} /></span>
             </div>
             {/* Line 2 */}
-            <div className="hero-line flex flex-wrap items-baseline gap-2">
-              <span className="text-[#F8FAFC]">We Ship&nbsp;</span>
-              <span className="word-swap">
-                <span className="word-swap-inner">Them.</span>
-                <span className="word-swap-inner">It Better.</span>
-                <span className="word-swap-inner">It Smart.</span>
-              </span>
+            <div className="hero-tagline text-center lg:text-left mt-2">
+              <span className="hero-tagline-item text-[#F8FAFC]">We Ship.&nbsp;</span>
+              <span className="hero-tagline-item"><Typewriter words={WORD_SETS[1]} delay={0} /></span>
             </div>
             {/* Line 3 */}
-            <div className="hero-line flex flex-wrap items-baseline gap-2">
-              <span className="text-[#F8FAFC]">You Own&nbsp;</span>
-              <span className="word-swap">
-                <span className="word-swap-inner">Them.</span>
-                <span className="word-swap-inner">The Future.</span>
-                <span className="word-swap-inner">It All.</span>
-              </span>
+            <div className="hero-tagline text-center lg:text-left mt-2">
+              <span className="hero-tagline-item text-[#F8FAFC]">You Own.&nbsp;</span>
+              <span className="hero-tagline-item"><Typewriter words={WORD_SETS[2]} delay={0} /></span>
             </div>
           </h1>
 
           {/* Subhead */}
           <p className="text-base sm:text-lg text-[#CBD5E1] max-w-xl mb-8 leading-relaxed">
-            AI-first development studio building SaaS products, autonomous agents, and digital systems — from spark to production. No slides. No consultants. Real builders.
+            AI-first development studio building SaaS products, autonomous agents, and digital systems — from spark to production.
           </p>
 
           {/* CTAs */}
