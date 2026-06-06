@@ -23,19 +23,24 @@ function isWebGLAvailable(): boolean {
   }
 }
 
-// Word sets for each line
 const LINE1_WORDS = ["AI Products", "AI Agents", "SaaS Platforms"];
-const LINE2_WORDS = ["Securely", "Fast", "Right"];
+const LINE2_WORDS = ["Securely", "Quality", "Right"];
 const LINE3_WORDS = ["More Time", "The Code", "Your Future"];
 
-function TypewriterWord({ words, colorClass }: { words: string[]; colorClass: string }) {
+function Typewriter({ words, delay = 0 }: { words: string[]; delay?: number }) {
   const [current, setCurrent] = useState(0);
-  const [visible, setVisible] = useState(true);
   const [phase, setPhase] = useState<"typing" | "holding" | "erasing">("typing");
   const [displayed, setDisplayed] = useState("");
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const startedRef = useRef(false);
 
   useEffect(() => {
+    const startDelay = setTimeout(() => { startedRef.current = true; }, delay);
+    return () => clearTimeout(startDelay);
+  }, [delay]);
+
+  useEffect(() => {
+    if (!startedRef.current) return;
     let charIndex = 0;
     const word = words[current];
 
@@ -62,29 +67,23 @@ function TypewriterWord({ words, colorClass }: { words: string[]; colorClass: st
       }
     };
 
-    timeoutRef.current = setTimeout(tick, 400);
+    timeoutRef.current = setTimeout(tick, 60);
     return () => { if (timeoutRef.current) clearTimeout(timeoutRef.current); };
   }, [phase, current, words]);
 
-  return (
-    <span className={`${colorClass} inline-block min-w-[10ch]`}>{displayed}</span>
-  );
+  return <span className="gradient-text">{displayed}</span>;
 }
 
 export default function Hero3D() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [webglOk, setWebglOk] = useState(true);
-  const objectsRef = useRef<FloatingObject[]>([]);
+  const rafRef = useRef<number>(0);
   const mouseRef = useRef({ x: 0, y: 0 });
   const targetMouseRef = useRef({ x: 0, y: 0 });
-  const rafRef = useRef<number>(0);
+  const objectsRef = useRef<FloatingObject[]>([]);
 
   useEffect(() => {
-    if (!isWebGLAvailable()) {
-      setWebglOk(false);
-      return;
-    }
-
+    if (!isWebGLAvailable()) { setWebglOk(false); return; }
     const canvas = canvasRef.current;
     if (!canvas) return;
 
@@ -95,12 +94,7 @@ export default function Hero3D() {
       renderer.setClearColor(0x000000, 0);
 
       const scene = new THREE.Scene();
-      const camera = new THREE.PerspectiveCamera(
-        60,
-        canvas.clientWidth / canvas.clientHeight,
-        0.1,
-        100
-      );
+      const camera = new THREE.PerspectiveCamera(60, canvas.clientWidth / canvas.clientHeight, 0.1, 100);
       camera.position.set(0, 0, 6);
 
       const matBlue = new THREE.MeshStandardMaterial({ color: 0x4f7cff, transparent: true, opacity: 0.35 });
@@ -134,11 +128,7 @@ export default function Hero3D() {
         mesh.rotation.set(Math.random() * Math.PI, Math.random() * Math.PI, Math.random() * Math.PI);
         objects.push({
           mesh,
-          velocity: new THREE.Vector3(
-            (Math.random() - 0.5) * 0.003,
-            (Math.random() - 0.5) * 0.003,
-            0
-          ),
+          velocity: new THREE.Vector3((Math.random() - 0.5) * 0.003, (Math.random() - 0.5) * 0.003, 0),
           rotationSpeed: new THREE.Vector3(
             (Math.random() - 0.5) * 0.008,
             (Math.random() - 0.5) * 0.008,
@@ -171,11 +161,9 @@ export default function Hero3D() {
 
       const handleResize = () => {
         if (!canvas || !renderer || !camera) return;
-        const w = canvas.clientWidth;
-        const h = canvas.clientHeight;
-        camera.aspect = w / h;
+        camera.aspect = canvas.clientWidth / canvas.clientHeight;
         camera.updateProjectionMatrix();
-        renderer.setSize(w, h);
+        renderer.setSize(canvas.clientWidth, canvas.clientHeight);
       };
       window.addEventListener("resize", handleResize);
 
@@ -224,20 +212,16 @@ export default function Hero3D() {
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-<div className="absolute inset-0" style={{ background: "#0A0E1A" }} />
+      <div className="absolute inset-0" style={{ background: "#0A0E1A" }} />
       <canvas ref={canvasRef} className="absolute inset-0 w-full h-full" style={{ display: webglOk ? "block" : "none" }} />
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
-          background:
-            "linear-gradient(to right, #0A0E1A 0%, rgba(10,14,26,0.75) 45%, rgba(10,14,26,0.20) 70%, transparent 100%)",
+          background: "linear-gradient(to right, #0A0E1A 0%, rgba(10,14,26,0.75) 45%, rgba(10,14,26,0.20) 70%, transparent 100%)",
           zIndex: 1,
         }}
       />
-      <div
-        className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 pt-20 sm:pt-24 w-full"
-        style={{ zIndex: 10 }}
-      >
+      <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 pt-20 sm:pt-24 w-full">
         <div className="text-center lg:text-left">
 
           {/* Badge */}
@@ -248,19 +232,25 @@ export default function Hero3D() {
             </span>
           </div>
 
-          {/* H1 — typewriter tagline */}
+          {/* H1 — same line structure: static + typewriter */}
           <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold tracking-tight leading-[1.05] mb-6 sm:mb-8">
             {/* Line 1 */}
-            <div className="block text-[#F8FAFC]">We Build&nbsp;</div>
-            <div className="block gradient-text mb-2">We Ship&nbsp;</div>
-            <div className="block text-[#F8FAFC]">You Own&nbsp;</div>
- {/* Animated words outside tagline, below */}
-<div className="flex flex-wrap gap-x-4 gap-y-1 mt-2 justify-center lg:justify-start">
-              <TypewriterWord words={LINE1_WORDS} colorClass="gradient-text" />
+            <div className="hero-tagline justify-center lg:justify-start">
+              <span className="text-[#F8FAFC]">We Build&nbsp;</span>
               <span className="text-[#F8FAFC]">·&nbsp;</span>
-              <TypewriterWord words={LINE2_WORDS} colorClass="gradient-text" />
+              <Typewriter words={LINE1_WORDS} />
+            </div>
+            {/* Line 2 */}
+            <div className="hero-tagline justify-center lg:justify-start mt-2">
+              <span className="gradient-text">We Ship&nbsp;</span>
               <span className="text-[#F8FAFC]">·&nbsp;</span>
-              <TypewriterWord words={LINE3_WORDS} colorClass="gradient-text" />
+              <Typewriter words={LINE2_WORDS} />
+            </div>
+            {/* Line 3 */}
+            <div className="hero-tagline justify-center lg:justify-start mt-2">
+              <span className="text-[#F8FAFC]">You Own&nbsp;</span>
+              <span className="text-[#F8FAFC]">·&nbsp;</span>
+              <Typewriter words={LINE3_WORDS} />
             </div>
           </h1>
 
