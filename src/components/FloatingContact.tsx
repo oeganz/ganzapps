@@ -19,8 +19,8 @@ export default function FloatingContact() {
       }`}
     >
       {/* Pulse rings */}
-      <div className="absolute inset-0 rounded-full bg-brand/40 animate-pulse-ring" />
-      <div className="absolute inset-0 rounded-full bg-brand/20 animate-pulse-ring" style={{ animationDelay: '0.7s' }} />
+      <div className="absolute inset-0 rounded-full bg-brand/40" />
+      <div className="absolute inset-0 rounded-full bg-brand/20" />
       
       <a
         href="mailto:oeganz1999@gmail.com"

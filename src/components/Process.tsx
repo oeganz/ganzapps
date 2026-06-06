@@ -32,12 +32,12 @@ const steps = [
 
 export default function Process() {
   return (
-    <section id="process" className="py-32 px-6 bg-surface-50/30">
-      <div className="max-w-6xl mx-auto">
+    <section id="process" className="py-32 bg-surface-50/30">
+      <div className="max-w-6xl mx-auto px-6">
         <ScrollReveal>
           <div className="text-center mb-20">
             <p className="text-brand font-semibold tracking-[0.2em] uppercase text-xs mb-5">
-              How We Work
+              HOW WE WORK
             </p>
             <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight leading-tight">
               Four steps. <span className="gradient-text">Zero fluff.</span>

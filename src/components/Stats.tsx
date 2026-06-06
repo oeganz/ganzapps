@@ -82,11 +82,11 @@ function StatCard({ stat }: { stat: StatItem }) {
 
 export default function Stats() {
   return (
-    <section className="py-20 px-6 border-y border-white/[0.05] bg-surface/60 relative overflow-hidden">
+    <section className="py-20 border-y border-white/[0.05] bg-surface/60 relative overflow-hidden">
       {/* Background accent */}
       <div className="absolute inset-0 bg-gradient-to-r from-brand/3 via-transparent to-brand/3 pointer-events-none" />
       
-      <div className="max-w-6xl mx-auto relative">
+      <div className="max-w-6xl mx-auto px-6 relative">
         <ScrollReveal>
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
             {stats.map((stat) => (

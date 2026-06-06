@@ -45,7 +45,7 @@ export default function Hero() {
           <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-2 rounded-full border border-brand/20 bg-brand/5 mb-6 sm:mb-8">
             <Zap className="w-3.5 h-3.5 text-brand" fill="#4F7CFF" />
             <span className="text-brand text-[10px] sm:text-xs font-semibold tracking-widest uppercase">
-              AI-Powered Development Studio
+              AI DEVELOPMENT STUDIO
             </span>
           </div>
 

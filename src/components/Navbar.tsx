@@ -58,7 +58,7 @@ export default function Navbar() {
     <>
       <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${
         scrolled
-          ? "var(--nav-bg) backdrop-blur-2xl border-b border-white/[0.06] shadow-[0_1px_30px_rgba(0,0,0,0.4)]"
+          ? "#0A0E1A backdrop-blur-2xl border-b border-white/[0.06] shadow-[0_1px_30px_rgba(0,0,0,0.4)]"
           : "bg-transparent border-b border-transparent"
       }`}>
         <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
@@ -95,7 +95,7 @@ export default function Navbar() {
               href="#contact"
               className="btn-primary text-sm font-semibold px-5 py-2.5 rounded-xl"
             >
-              Get Started
+              Start a Project →
             </a>
           </div>
 

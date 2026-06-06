@@ -8,93 +8,107 @@ const services = [
   {
     icon: Server,
     title: "SaaS Building",
-    desc: "Full-stack SaaS products — auth, billing, dashboards, APIs. We build the whole thing, not just the UI.",
+    desc: "Full-stack products — auth, billing, dashboards, APIs. From spark to production.",
     badge: "Popular",
-    accent: "var(--primary)",
+    accent: "#4F7CFF",
+    gradient: "linear-gradient(90deg, #4F7CFF, #22D3EE)",
   },
   {
     icon: Brain,
     title: "Agentic AI",
-    desc: "Deploy autonomous AI agents that handle workflows, make decisions, and scale your operations 24/7.",
+    desc: "Autonomous agents that handle workflows and decisions — 24/7, without human input.",
     badge: "High Demand",
-    accent: "#a78bfa",
+    accent: "#8B5CF6",
+    gradient: "linear-gradient(90deg, #8B5CF6, #4F7CFF)",
   },
   {
     icon: Cpu,
     title: "ADLC Setup",
-    desc: "AI Development Lifecycle integration — from code generation to CI/CD, testing, and production deployment.",
+    desc: "AI Development Lifecycle integration — from code generation to CI/CD, testing, and deployment.",
     badge: null,
-    accent: "var(--cyan)",
+    accent: "#22D3EE",
+    gradient: "linear-gradient(90deg, #22D3EE, #8B5CF6)",
   },
   {
     icon: Workflow,
     title: "AI Digitalization",
-    desc: "Transform manual processes into automated digital systems. CRM, ERP, internal tools — we build what you need.",
+    desc: "Legacy processes into modern data pipelines, dashboards, and automated reporting.",
     badge: null,
     accent: "#fb923c",
+    gradient: "linear-gradient(90deg, #fb923c, #4F7CFF)",
   },
   {
     icon: Compass,
     title: "Tech Consulting",
-    desc: "Architecture review, stack selection, scaling strategy. Get expert guidance before you commit resources.",
+    desc: "Architecture review, stack selection, scaling strategy. Expert guidance before you commit.",
     badge: null,
     accent: "#f472b6",
+    gradient: "linear-gradient(90deg, #f472b6, #8B5CF6)",
   },
 ];
 
 function ServiceCard({ s, delay }: { s: typeof services[0]; delay: number }) {
   return (
     <ScrollReveal delay={delay}>
-      <div className="group glass-card p-8 h-full relative overflow-hidden cursor-default">
-        {/* Subtle top-left corner accent */}
+      <div
+        className="group glass-card rounded-[16px] p-0 h-full relative overflow-hidden cursor-default transition-all duration-300"
+        style={{
+          border: "1px solid rgba(42,51,73,0.7)",
+        }}
+      >
+        {/* Top gradient accent bar */}
         <div
-          className="absolute top-0 left-0 w-1 h-full rounded-l-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-          style={{ background: `linear-gradient(180deg, ${s.accent}, transparent)` }}
+          className="w-full h-0.5"
+          style={{ background: s.gradient }}
         />
 
-        {/* Badge */}
-        {s.badge && (
-          <div className="absolute top-5 right-5">
+        {/* Icon + content area */}
+        <div className="p-6 pb-7">
+          {/* Badge */}
+          {s.badge && (
             <span
-              className="text-xs font-bold px-3 py-1 rounded-full border"
+              className="inline-flex items-center text-[10px] font-bold px-2.5 py-1 rounded-full mb-5"
               style={{
                 color: s.accent,
-                borderColor: `${s.accent}30`,
-                background: `${s.accent}10`,
+                background: `${s.accent}12`,
+                border: `1px solid ${s.accent}30`,
+                letterSpacing: "0.04em",
               }}
             >
               {s.badge}
             </span>
+          )}
+
+          {/* Icon tile */}
+          <div
+            className="w-12 h-12 rounded-[11px] flex items-center justify-center mb-5 transition-all duration-300 group-hover:scale-105"
+            style={{
+              background: `${s.accent}15`,
+            }}
+          >
+            <s.icon
+              className="w-5 h-5"
+              style={{ color: s.accent }}
+              strokeWidth={1.5}
+            />
           </div>
-        )}
 
-        {/* Icon */}
-        <div
-          className="w-12 h-12 rounded-xl flex items-center justify-center mb-6 transition-all duration-300"
-          style={{ background: `${s.accent}15` }}
-        >
-          <s.icon
-            className="w-6 h-6 transition-colors duration-300"
-            style={{ color: s.accent }}
-            strokeWidth={1.5}
-          />
+          {/* Title */}
+          <h3
+            className="text-[17px] font-semibold tracking-tight mb-2.5 leading-snug"
+            style={{ color: "#F8FAFC", letterSpacing: "-0.02em" }}
+          >
+            {s.title}
+          </h3>
+
+          {/* Description */}
+          <p
+            className="text-[13px] leading-relaxed"
+            style={{ color: "#8392A8", lineHeight: 1.6 }}
+          >
+            {s.desc}
+          </p>
         </div>
-
-        {/* Title */}
-        <h3 className="text-xl font-bold mb-3 text-white group-hover:text-white transition-colors">
-          {s.title}
-        </h3>
-
-        {/* Description */}
-        <p className="text-[var(--text-muted)] leading-relaxed text-sm group-hover:var(--text-body) transition-colors">
-          {s.desc}
-        </p>
-
-        {/* Bottom hover line */}
-        <div
-          className="absolute bottom-0 left-0 h-px w-0 group-hover:w-full transition-all duration-500"
-          style={{ background: `linear-gradient(90deg, ${s.accent}, transparent)` }}
-        />
       </div>
     </ScrollReveal>
   );
@@ -102,14 +116,20 @@ function ServiceCard({ s, delay }: { s: typeof services[0]; delay: number }) {
 
 export default function Services() {
   return (
-    <section id="services" className="py-32 px-6">
-      <div className="max-w-6xl mx-auto">
+    <section id="services" className="py-32">
+      <div className="max-w-6xl mx-auto px-6">
         <ScrollReveal>
-          <div className="text-center mb-20">
-            <p className="text-brand font-semibold tracking-[0.2em] uppercase text-xs mb-5">
-              What We Build
+          <div className="text-center mb-16">
+            <p
+              className="text-brand font-semibold tracking-[0.2em] uppercase text-xs mb-5"
+              style={{ color: "#4F7CFF" }}
+            >
+              WHAT WE BUILD
             </p>
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight leading-tight">
+            <h2
+              className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight leading-tight"
+              style={{ color: "#F8FAFC", letterSpacing: "-0.02em" }}
+            >
               From spark to <span className="gradient-text">scale</span>
             </h2>
           </div>

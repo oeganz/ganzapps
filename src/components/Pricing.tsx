@@ -53,8 +53,8 @@ const plans = [
 
 export default function Pricing() {
   return (
-    <section id="pricing" className="py-32 px-6 bg-surface/20">
-      <div className="max-w-6xl mx-auto">
+    <section id="pricing" className="py-32 bg-surface/20">
+      <div className="max-w-6xl mx-auto px-6">
         <ScrollReveal>
           <div className="text-center mb-20">
             <p className="text-brand font-semibold tracking-[0.2em] uppercase text-xs mb-5">
@@ -72,7 +72,7 @@ export default function Pricing() {
               <div
                 className={`glass-card relative p-8 flex flex-col h-full ${
                   plan.highlight
-                    ? "border-brand/30 shadow-[0_0_60px_-12px_rgba(79,124,255,0.22)]"
+                    ? "border-2 border-solid border-[#4F7CFF] shadow-[0_0_60px_-12px_rgba(79,124,255,0.45)]"
                     : ""
                 }`}
               >

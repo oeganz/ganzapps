@@ -5,11 +5,11 @@ import ScrollReveal from "./ScrollReveal";
 
 export default function Contact() {
   return (
-    <section id="contact" className="py-32 px-6">
+    <section id="contact" className="py-32">
       <div className="max-w-3xl mx-auto text-center">
         <ScrollReveal>
           <p className="text-brand font-semibold tracking-[0.2em] uppercase text-xs mb-5">
-            Get In Touch
+            GET IN TOUCH
           </p>
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight leading-tight mb-6">
             Let&apos;s ship something <span className="gradient-text">great</span>
@@ -27,10 +27,10 @@ export default function Contact() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
               href="mailto:oeganz1999@gmail.com"
-              className="btn-primary text-base flex-row"
+              className="btn-gradient text-base"
             >
               <Mail className="w-5 h-5" strokeWidth={1.5} />
-              Contact Us
+              Start a Project →
             </a>
           </div>
         </ScrollReveal>

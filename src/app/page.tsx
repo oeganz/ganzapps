@@ -1,5 +1,5 @@
 import Navbar from "@/components/Navbar";
-import Hero from "@/components/Hero";
+import Hero3D from "@/components/Hero3D";
 import Stats from "@/components/Stats";
 import ClientLogos from "@/components/ClientLogos";
 import Services from "@/components/Services";
@@ -7,7 +7,6 @@ import Process from "@/components/Process";
 import Portfolio from "@/components/Portfolio";
 import TechStack from "@/components/TechStack";
 import About from "@/components/About";
-import Pricing from "@/components/Pricing";
 import FAQ from "@/components/FAQ";
 import SecondCTA from "@/components/SecondCTA";
 import Contact from "@/components/Contact";
@@ -19,7 +18,7 @@ export default function Home() {
   return (
     <main>
       <Navbar />
-      <Hero />
+      <Hero3D />
       <Stats />
       <ClientLogos />
       <Services />
@@ -27,7 +26,6 @@ export default function Home() {
       <Portfolio />
       <TechStack />
       <About />
-      <Pricing />
       <FAQ />
       <SecondCTA />
       <Contact />
