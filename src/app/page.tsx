@@ -1,5 +1,6 @@
 import Navbar from "@/components/Navbar";
 import Hero3D from "@/components/Hero3D";
+import HeroScrollReveal from "@/components/HeroScrollReveal";
 import Stats from "@/components/Stats";
 import ClientLogos from "@/components/ClientLogos";
 import Services from "@/components/Services";
@@ -19,6 +20,7 @@ export default function Home() {
     <main>
       <Navbar />
       <Hero3D />
+      <HeroScrollReveal />
       <Stats />
       <ClientLogos />
       <Services />
