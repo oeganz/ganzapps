@@ -14,6 +14,7 @@ import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import FloatingContact from "@/components/FloatingContact";
 import BackToTop from "@/components/BackToTop";
+import ScrollAnimatedBg from "@/components/ScrollAnimatedBg";
 
 export default function Home() {
   return (
@@ -22,13 +23,49 @@ export default function Home() {
       <Hero3D />
       <HeroScrollReveal />
       <Stats />
-      <ClientLogos />
-      <Services />
-      <Process />
-      <Portfolio />
-      <TechStack />
-      <About />
-      <FAQ />
+
+      {/* ClientLogos + floating orbs */}
+      <div className="relative">
+        <ScrollAnimatedBg type="orbs" density={3} />
+        <ClientLogos />
+      </div>
+
+      {/* Services + wave grid */}
+      <div className="relative">
+        <ScrollAnimatedBg type="grid" density={40} />
+        <Services />
+      </div>
+
+      {/* Process + floating lines */}
+      <div className="relative overflow-hidden">
+        <ScrollAnimatedBg type="lines" density={25} />
+        <Process />
+      </div>
+
+      {/* Portfolio + particles */}
+      <div className="relative">
+        <ScrollAnimatedBg type="particles" density={20} />
+        <Portfolio />
+      </div>
+
+      {/* TechStack + wave grid */}
+      <div className="relative">
+        <ScrollAnimatedBg type="grid" density={50} />
+        <TechStack />
+      </div>
+
+      {/* About + orbs */}
+      <div className="relative">
+        <ScrollAnimatedBg type="orbs" density={4} />
+        <About />
+      </div>
+
+      {/* FAQ + particles */}
+      <div className="relative">
+        <ScrollAnimatedBg type="particles" density={15} />
+        <FAQ />
+      </div>
+
       <SecondCTA />
       <Contact />
       <Footer />
