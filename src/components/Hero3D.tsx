@@ -27,49 +27,52 @@ const LINE1_WORDS = ["AI Products", "AI Agents", "SaaS Platforms"];
 const LINE2_WORDS = ["Securely", "Quality", "Right"];
 const LINE3_WORDS = ["More Time", "The Code", "Your Future"];
 
-function Typewriter({ words, delay = 0 }: { words: string[]; delay?: number }) {
-  const [current, setCurrent] = useState(0);
-  const [phase, setPhase] = useState<"typing" | "holding" | "erasing">("typing");
-  const [displayed, setDisplayed] = useState("");
-  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const startedRef = useRef(false);
+function Typewriter({ words }: { words: string[] }) {
+  const idxRef = useRef(0);
+  const charRef = useRef(0);
+  const phaseRef = useRef<"typing" | "holding" | "erasing">("typing");
+  const [displayed, setDisplayed] = useState(words[0]);
+  const rafRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
-    const startDelay = setTimeout(() => { startedRef.current = true; }, delay);
-    return () => clearTimeout(startDelay);
-  }, [delay]);
+    const TYPING_SPEED = 55;
+    const ERASE_SPEED = 30;
+    const HOLD_TIME = 1800;
 
-  useEffect(() => {
-    if (!startedRef.current) return;
-    let charIndex = 0;
-    const word = words[current];
+    let cancelled = false;
 
     const tick = () => {
-      if (phase === "typing") {
-        charIndex++;
-        setDisplayed(word.slice(0, charIndex));
-        if (charIndex < word.length) {
-          timeoutRef.current = setTimeout(tick, 60);
+      if (cancelled) return;
+      const word = words[idxRef.current];
+
+      if (phaseRef.current === "typing") {
+        charRef.current++;
+        if (charRef.current <= word.length) {
+          setDisplayed(word.slice(0, charRef.current));
+          rafRef.current = setTimeout(tick, TYPING_SPEED);
         } else {
-          timeoutRef.current = setTimeout(() => setPhase("holding"), 1800);
+          phaseRef.current = "holding";
+          rafRef.current = setTimeout(tick, HOLD_TIME);
         }
-      } else if (phase === "holding") {
-        setPhase("erasing");
-      } else if (phase === "erasing") {
-        charIndex--;
-        setDisplayed(word.slice(0, charIndex));
-        if (charIndex > 0) {
-          timeoutRef.current = setTimeout(tick, 35);
+      } else if (phaseRef.current === "holding") {
+        phaseRef.current = "erasing";
+        rafRef.current = setTimeout(tick, 50);
+      } else if (phaseRef.current === "erasing") {
+        charRef.current--;
+        if (charRef.current > 0) {
+          setDisplayed(word.slice(0, charRef.current));
+          rafRef.current = setTimeout(tick, ERASE_SPEED);
         } else {
-          setCurrent((c) => (c + 1) % words.length);
-          setPhase("typing");
+          idxRef.current = (idxRef.current + 1) % words.length;
+          phaseRef.current = "typing";
+          rafRef.current = setTimeout(tick, 300);
         }
       }
     };
 
-    timeoutRef.current = setTimeout(tick, 60);
-    return () => { if (timeoutRef.current) clearTimeout(timeoutRef.current); };
-  }, [phase, current, words]);
+    rafRef.current = setTimeout(tick, 400);
+    return () => { cancelled = true; if (rafRef.current) clearTimeout(rafRef.current); };
+  }, [words]);
 
   return <span className="gradient-text">{displayed}</span>;
 }
@@ -232,24 +235,21 @@ export default function Hero3D() {
             </span>
           </div>
 
-          {/* H1 — same line structure: static + typewriter */}
+          {/* H1 */}
           <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold tracking-tight leading-[1.05] mb-6 sm:mb-8">
             {/* Line 1 */}
-            <div className="hero-tagline justify-center lg:justify-start">
-              <span className="text-[#F8FAFC]">We Build&nbsp;</span>
-              <span className="text-[#F8FAFC]">·&nbsp;</span>
+            <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1 justify-center lg:justify-start">
+              <span className="text-[#F8FAFC]">We Build</span>
               <Typewriter words={LINE1_WORDS} />
             </div>
             {/* Line 2 */}
-            <div className="hero-tagline justify-center lg:justify-start mt-2">
-              <span className="gradient-text">We Ship&nbsp;</span>
-              <span className="text-[#F8FAFC]">·&nbsp;</span>
+            <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1 mt-2 justify-center lg:justify-start">
+              <span className="gradient-text">We Ship</span>
               <Typewriter words={LINE2_WORDS} />
             </div>
             {/* Line 3 */}
-            <div className="hero-tagline justify-center lg:justify-start mt-2">
-              <span className="text-[#F8FAFC]">You Own&nbsp;</span>
-              <span className="text-[#F8FAFC]">·&nbsp;</span>
+            <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1 mt-2 justify-center lg:justify-start">
+              <span className="text-[#F8FAFC]">You Own</span>
               <Typewriter words={LINE3_WORDS} />
             </div>
           </h1>
