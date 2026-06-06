@@ -43,7 +43,7 @@ export default function About() {
                 <img
                   src="/images/profile-real.png"
                   alt="Ugan Saripudin"
-                  className="w-20 h-20 rounded-2xl object-cover flex-shrink-0"
+                  className="w-[220px] rounded-2xl object-cover flex-shrink-0"
                 />
                 <div>
                   <h3 className="text-lg font-bold mb-1">Ugan Saripudin</h3>
