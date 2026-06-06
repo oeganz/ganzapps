@@ -24,47 +24,40 @@ export default function Home() {
       <HeroScrollReveal />
       <Stats />
 
-      {/* ClientLogos + floating orbs */}
-      <section id="clients" className="relative overflow-hidden">
+      <div className="relative">
         <ScrollAnimatedBg type="orbs" />
         <ClientLogos />
-      </section>
+      </div>
 
-      {/* Services + wave grid */}
-      <section id="services" className="relative overflow-hidden">
+      <div className="relative">
         <ScrollAnimatedBg type="grid" />
         <Services />
-      </section>
+      </div>
 
-      {/* Process + floating lines */}
-      <section id="process" className="relative overflow-hidden">
+      <div className="relative">
         <ScrollAnimatedBg type="lines" />
         <Process />
-      </section>
+      </div>
 
-      {/* Portfolio + particles */}
-      <section id="portfolio" className="relative overflow-hidden">
+      <div className="relative">
         <ScrollAnimatedBg type="particles" />
         <Portfolio />
-      </section>
+      </div>
 
-      {/* TechStack + wave grid */}
-      <section id="techstack" className="relative overflow-hidden">
+      <div className="relative">
         <ScrollAnimatedBg type="grid" />
         <TechStack />
-      </section>
+      </div>
 
-      {/* About + ribbon/waves */}
-      <section id="about" className="relative overflow-hidden">
+      <div className="relative">
         <ScrollAnimatedBg type="ribbon" />
         <About />
-      </section>
+      </div>
 
-      {/* FAQ + particles */}
-      <section id="faq" className="relative overflow-hidden">
+      <div className="relative">
         <ScrollAnimatedBg type="particles" />
         <FAQ />
-      </section>
+      </div>
 
       <SecondCTA />
       <Contact />

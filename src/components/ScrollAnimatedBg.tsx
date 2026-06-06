@@ -4,309 +4,259 @@ import { useEffect, useRef } from "react";
 
 type AnimationType = "particles" | "orbs" | "grid" | "lines" | "ribbon";
 
-function runParticles(
-  canvas: HTMLCanvasElement,
-  scrollProgress: () => number
-) {
+function runParticles(canvas: HTMLCanvasElement, getProgress: () => number) {
   const ctx = canvas.getContext("2d");
   if (!ctx) return;
   let raf = 0;
-  let width = 0;
-  let height = 0;
-  const density = 35;
+  let W = 0;
+  let H = 0;
+  const N = 35;
   const hues = [220, 260, 190];
 
-  const resize = () => {
-    width = canvas.offsetWidth;
-    height = canvas.offsetHeight;
-    canvas.width = width;
-    canvas.height = height;
-  };
+  const resize = () => { W = canvas.offsetWidth; H = canvas.offsetHeight; canvas.width = W; canvas.height = H; };
 
-  const particles = Array.from({ length: density }, () => ({
-    x: Math.random() * 0,
-    y: Math.random() * height,
-    size: 1 + Math.random() * 2.5,
-    speed: 0.2 + Math.random() * 0.7,
-    opacity: 0.08 + Math.random() * 0.2,
+  const ps = Array.from({ length: N }, () => ({
+    x: 0, y: 0, size: 1 + Math.random() * 2.5,
+    speed: 0.2 + Math.random() * 0.7, opacity: 0.08 + Math.random() * 0.2,
     hue: hues[Math.floor(Math.random() * hues.length)],
-    drift: (Math.random() - 0.5) * 0.6,
-    phase: Math.random() * Math.PI * 2,
-    baseX: Math.random() * 0,
+    drift: (Math.random() - 0.5) * 0.6, phase: Math.random() * Math.PI * 2,
   }));
 
   let active = false;
-  const observer = new IntersectionObserver(
-    ([e]) => { if (e.isIntersecting) active = true; },
-    { threshold: 0 }
-  );
-  observer.observe(canvas);
+  const obs = new IntersectionObserver(([e]) => { active = e.isIntersecting; }, { threshold: 0 });
+  obs.observe(canvas);
   resize();
 
-  const animate = () => {
-    raf = requestAnimationFrame(animate);
+  const draw = () => {
+    raf = requestAnimationFrame(draw);
     if (!active) return;
-    ctx.clearRect(0, 0, width, height);
-    const sp = scrollProgress();
+    ctx.clearRect(0, 0, W, H);
+    const sp = getProgress();
     const t = Date.now() * 0.001;
-
-    for (const p of particles) {
-      // Scroll-driven: particles speed up and fade in as section scrolls into view
-      const drift = p.speed * (0.5 + sp * 2);
-      p.y -= drift;
-      p.x = p.baseX + Math.sin(t * 0.5 + p.phase) * 30 + sp * width * 0.1;
-
-      if (p.y < -10) { p.y = height + 10; p.baseX = Math.random() * width; p.x = p.baseX; }
-      if (p.x > width + 20) p.x = -20;
-
-      const alpha = p.opacity * (0.4 + sp * 0.6);
+    for (const p of ps) {
+      p.y -= p.speed * (0.5 + sp * 2);
+      p.x += Math.sin(t + p.phase) * 0.3 + p.drift;
+      if (p.y < -10) { p.y = H + 10; p.x = Math.random() * W; }
+      if (p.x < 0) p.x = W; if (p.x > W) p.x = 0;
+      if (p.y === 0) { p.y = Math.random() * H; p.x = Math.random() * W; }
+      const a = p.opacity * (0.4 + sp * 0.6);
       const pulse = 0.6 + Math.sin(t * 2 + p.phase) * 0.4;
       ctx.beginPath();
       ctx.arc(p.x, p.y, p.size * (1 + sp * 0.5), 0, Math.PI * 2);
-      ctx.fillStyle = `hsla(${p.hue}, 75%, 65%, ${alpha * pulse})`;
+      ctx.fillStyle = `hsla(${p.hue},75%,65%,${a * pulse})`;
       ctx.fill();
     }
   };
-  animate();
-  return () => { cancelAnimationFrame(raf); observer.disconnect(); window.removeEventListener("resize", resize); };
+  draw();
+  return () => { cancelAnimationFrame(raf); obs.disconnect(); };
 }
 
-function runOrbs(
-  canvas: HTMLCanvasElement,
-  scrollProgress: () => number
-) {
+function runOrbs(canvas: HTMLCanvasElement, getProgress: () => number) {
   const ctx = canvas.getContext("2d");
   if (!ctx) return;
   let raf = 0;
-  let width = 0;
-  let height = 0;
-  const colors = [{ h: 220, s: 80, l: 65 }, { h: 260, s: 75, l: 65 }, { h: 190, s: 80, l: 60 }];
+  let W = 0;
+  let H = 0;
+  const cols = [{ h: 220, s: 80, l: 65 }, { h: 260, s: 75, l: 65 }, { h: 190, s: 80, l: 60 }];
 
-  const resize = () => { width = canvas.offsetWidth; height = canvas.offsetHeight; canvas.width = width; canvas.height = height; };
+  const resize = () => { W = canvas.offsetWidth; H = canvas.offsetHeight; canvas.width = W; canvas.height = H; };
+  resize();
 
-  const orbs = Array.from({ length: 4 }, (_, i) => ({
-    x: Math.random() * width, y: Math.random() * height,
-    baseX: 0, baseY: 0,
-    size: 80 + Math.random() * 120, color: colors[i % colors.length],
-    speed: 0.2 + Math.random() * 0.4, phase: Math.random() * Math.PI * 2,
-    vx: (Math.random() - 0.5) * 0.3, vy: (Math.random() - 0.5) * 0.2,
+  const orbs = cols.map((c, i) => ({
+    ox: W * (0.2 + i * 0.3), oy: H * (0.3 + (i % 2) * 0.4),
+    x: 0, y: 0,
+    size: 80 + i * 40, color: c, speed: 0.2 + i * 0.1, phase: i * 2,
   }));
-
-  // Set base positions after resize
-  const init = () => { resize(); orbs.forEach(o => { o.baseX = o.x; o.baseY = o.y; }); };
-  init();
+  orbs.forEach(o => { o.x = o.ox; o.y = o.oy; });
 
   let active = false;
-  const observer = new IntersectionObserver(([e]) => { if (e.isIntersecting) active = true; }, { threshold: 0 });
-  observer.observe(canvas);
+  const obs = new IntersectionObserver(([e]) => { active = e.isIntersecting; }, { threshold: 0 });
+  obs.observe(canvas);
 
-  const animate = () => {
-    raf = requestAnimationFrame(animate);
+  const draw = () => {
+    raf = requestAnimationFrame(draw);
     if (!active) return;
-    ctx.clearRect(0, 0, width, height);
-    const sp = scrollProgress();
+    ctx.clearRect(0, 0, W, H);
+    const sp = getProgress();
     const t = Date.now() * 0.0006;
-
-    for (const orb of orbs) {
-      orb.x = orb.baseX + Math.sin(t * orb.speed + orb.phase) * (50 + sp * 30);
-      orb.y = orb.baseY + Math.cos(t * orb.speed * 0.7 + orb.phase) * (30 + sp * 20);
-      // Drift with scroll
-      orb.baseX += orb.vx * sp * 0.5;
-      orb.baseY += orb.vy * sp * 0.3;
-
-      const grad = ctx.createRadialGradient(orb.x, orb.y, 0, orb.x, orb.y, orb.size * (1 + sp * 0.3));
-      grad.addColorStop(0, `hsla(${orb.color.h}, ${orb.color.s}%, ${orb.color.l}%, ${0.06 + sp * 0.04})`);
-      grad.addColorStop(1, "transparent");
-      ctx.fillStyle = grad;
+    for (const o of orbs) {
+      o.x = o.ox + Math.sin(t * o.speed + o.phase) * (50 + sp * 30);
+      o.y = o.oy + Math.cos(t * o.speed * 0.7 + o.phase) * (30 + sp * 20);
+      const sz = o.size * (1 + sp * 0.3);
+      const g = ctx.createRadialGradient(o.x, o.y, 0, o.x, o.y, sz);
+      g.addColorStop(0, `hsla(${o.color.h},${o.color.s}%,${o.color.l}%,${0.06 + sp * 0.04})`);
+      g.addColorStop(1, "transparent");
+      ctx.fillStyle = g;
       ctx.beginPath();
-      ctx.arc(orb.x, orb.y, orb.size * (1 + sp * 0.3), 0, Math.PI * 2);
+      ctx.arc(o.x, o.y, sz, 0, Math.PI * 2);
       ctx.fill();
     }
   };
-  animate();
-  return () => { cancelAnimationFrame(raf); observer.disconnect(); };
+  draw();
+  return () => { cancelAnimationFrame(raf); obs.disconnect(); };
 }
 
-function runGrid(
-  canvas: HTMLCanvasElement,
-  scrollProgress: () => number
-) {
+function runGrid(canvas: HTMLCanvasElement, getProgress: () => number) {
   const ctx = canvas.getContext("2d");
   if (!ctx) return;
   let raf = 0;
-  let width = 0;
-  let height = 0;
-  const spacing = 50;
+  let W = 0;
+  let H = 0;
+  const sp2 = 50;
 
-  const resize = () => { width = canvas.offsetWidth; height = canvas.offsetHeight; canvas.width = width; canvas.height = height; };
+  const resize = () => { W = canvas.offsetWidth; H = canvas.offsetHeight; canvas.width = W; canvas.height = H; };
   resize();
 
   let active = false;
-  const observer = new IntersectionObserver(([e]) => { if (e.isIntersecting) active = true; }, { threshold: 0 });
-  observer.observe(canvas);
+  const obs = new IntersectionObserver(([e]) => { active = e.isIntersecting; }, { threshold: 0 });
+  obs.observe(canvas);
 
-  const animate = () => {
-    raf = requestAnimationFrame(animate);
+  const draw = () => {
+    raf = requestAnimationFrame(draw);
     if (!active) return;
-    ctx.clearRect(0, 0, width, height);
-    const sp = scrollProgress();
+    ctx.clearRect(0, 0, W, H);
+    const pg = getProgress();
     const t = Date.now() * 0.001;
-    const cols = Math.ceil(width / spacing) + 1;
-    const rows = Math.ceil(height / spacing) + 1;
-
+    const cols = Math.ceil(W / sp2) + 1;
+    const rows = Math.ceil(H / sp2) + 1;
     for (let r = 0; r < rows; r++) {
       for (let c = 0; c < cols; c++) {
-        const x = c * spacing;
-        const y = r * spacing;
+        const x = c * sp2;
+        const y = r * sp2;
         const wave = Math.sin(t * 0.4 + c * 0.25 + r * 0.25) * 0.5 + 0.5;
-        // Size pulses with scroll
-        const size = 1.5 + wave * (1 + sp);
-        const alpha = (0.02 + wave * 0.05) * (0.3 + sp * 0.7);
-        ctx.fillStyle = `rgba(79, 124, 255, ${alpha})`;
-        ctx.fillRect(x - size / 2, y - size / 2, size, size);
+        const sz = 1.5 + wave * (1 + pg);
+        const a = (0.02 + wave * 0.05) * (0.3 + pg * 0.7);
+        ctx.fillStyle = `rgba(79,124,255,${a})`;
+        ctx.fillRect(x - sz / 2, y - sz / 2, sz, sz);
       }
     }
   };
-  animate();
-  return () => { cancelAnimationFrame(raf); observer.disconnect(); };
+  draw();
+  return () => { cancelAnimationFrame(raf); obs.disconnect(); };
 }
 
-function runLines(
-  canvas: HTMLCanvasElement,
-  scrollProgress: () => number
-) {
+function runLines(canvas: HTMLCanvasElement, getProgress: () => number) {
   const ctx = canvas.getContext("2d");
   if (!ctx) return;
   let raf = 0;
-  let width = 0;
-  let height = 0;
-  const density = 20;
+  let W = 0;
+  let H = 0;
+  const N = 20;
 
-  const resize = () => { width = canvas.offsetWidth; height = canvas.offsetHeight; canvas.width = width; canvas.height = height; };
+  const resize = () => { W = canvas.offsetWidth; H = canvas.offsetHeight; canvas.width = W; canvas.height = H; };
+  resize();
 
-  const lines = Array.from({ length: density }, () => ({
-    x: Math.random() * 0, y: Math.random() * height,
-    len: 30 + Math.random() * 70, angle: Math.random() * Math.PI * 2,
-    speed: 0.2 + Math.random() * 0.5,
+  const ls = Array.from({ length: N }, () => ({
+    x: 0, y: 0, len: 30 + Math.random() * 70,
+    angle: Math.random() * Math.PI * 2, speed: 0.2 + Math.random() * 0.5,
     opacity: 0.04 + Math.random() * 0.12, hue: 220 + Math.random() * 40,
-    baseX: Math.random() * 0,
   }));
-
-  const init = () => { resize(); lines.forEach(l => { l.baseX = l.x; }); };
-  init();
+  ls.forEach(l => { l.x = Math.random() * 1000; l.y = Math.random() * 1000; });
 
   let active = false;
-  const observer = new IntersectionObserver(([e]) => { if (e.isIntersecting) active = true; }, { threshold: 0 });
-  observer.observe(canvas);
+  const obs = new IntersectionObserver(([e]) => { active = e.isIntersecting; }, { threshold: 0 });
+  obs.observe(canvas);
 
-  const animate = () => {
-    raf = requestAnimationFrame(animate);
+  const draw = () => {
+    raf = requestAnimationFrame(draw);
     if (!active) return;
-    ctx.clearRect(0, 0, width, height);
-    const sp = scrollProgress();
+    ctx.clearRect(0, 0, W, H);
+    const pg = getProgress();
     const t = Date.now() * 0.001;
-
-    for (const line of lines) {
-      line.y -= line.speed * (0.5 + sp);
-      line.baseX += (Math.random() - 0.5) * 0.1 * sp;
-      line.x = line.baseX + Math.sin(t + line.angle) * 20 + sp * width * 0.05;
-
-      if (line.y < -line.len) { line.y = height + line.len; line.baseX = Math.random() * width; line.x = line.baseX; }
-      if (line.x < -10) line.x = width + 10;
-      if (line.x > width + 10) line.x = -10;
-
+    for (const l of ls) {
+      l.y -= l.speed * (0.5 + pg);
+      l.x += Math.sin(t + l.angle) * 0.2;
+      if (l.y < -l.len) { l.y = H + l.len; l.x = Math.random() * W; }
+      if (l.x < 0) l.x = W; if (l.x > W) l.x = 0;
       ctx.beginPath();
-      ctx.moveTo(line.x, line.y);
-      ctx.lineTo(line.x + Math.cos(line.angle) * line.len, line.y + Math.sin(line.angle) * line.len);
-      ctx.strokeStyle = `hsla(${line.hue}, 80%, 65%, ${line.opacity * (0.4 + sp * 0.6)})`;
-      ctx.lineWidth = 0.5 + sp * 0.5;
+      ctx.moveTo(l.x, l.y);
+      ctx.lineTo(l.x + Math.cos(l.angle) * l.len, l.y + Math.sin(l.angle) * l.len);
+      ctx.strokeStyle = `hsla(${l.hue},80%,65%,${l.opacity * (0.4 + pg * 0.6)})`;
+      ctx.lineWidth = 0.5 + pg * 0.5;
       ctx.stroke();
     }
   };
-  animate();
-  return () => { cancelAnimationFrame(raf); observer.disconnect(); };
+  draw();
+  return () => { cancelAnimationFrame(raf); obs.disconnect(); };
 }
 
-function runRibbon(
-  canvas: HTMLCanvasElement,
-  scrollProgress: () => number
-) {
+function runRibbon(canvas: HTMLCanvasElement, getProgress: () => number) {
   const ctx = canvas.getContext("2d");
   if (!ctx) return;
   let raf = 0;
-  let width = 0;
-  let height = 0;
+  let W = 0;
+  let H = 0;
 
-  const resize = () => { width = canvas.offsetWidth; height = canvas.offsetHeight; canvas.width = width; canvas.height = height; };
+  const resize = () => { W = canvas.offsetWidth; H = canvas.offsetHeight; canvas.width = W; canvas.height = H; };
   resize();
 
   let active = false;
-  const observer = new IntersectionObserver(([e]) => { if (e.isIntersecting) active = true; }, { threshold: 0 });
-  observer.observe(canvas);
+  const obs = new IntersectionObserver(([e]) => { active = e.isIntersecting; }, { threshold: 0 });
+  obs.observe(canvas);
 
-  const animate = () => {
-    raf = requestAnimationFrame(animate);
+  const draw = () => {
+    raf = requestAnimationFrame(draw);
     if (!active) return;
-    ctx.clearRect(0, 0, width, height);
-    const sp = scrollProgress();
+    ctx.clearRect(0, 0, W, H);
+    const pg = getProgress();
     const t = Date.now() * 0.001;
-
-    // Draw a ribbon/flowing wave that morphs with scroll
-    const points = 60;
     for (let band = 0; band < 3; band++) {
       ctx.beginPath();
-      for (let i = 0; i <= points; i++) {
-        const x = (i / points) * width;
-        const yBase = height * (0.3 + band * 0.2);
+      for (let i = 0; i <= 60; i++) {
+        const x = (i / 60) * W;
+        const yB = H * (0.3 + band * 0.2);
         const amp = 20 + band * 10;
         const freq = 0.008 + band * 0.002;
-        const y = yBase + Math.sin(x * freq + t * (0.5 + band * 0.2) + sp * 3) * amp * (0.5 + sp * 0.5);
-        if (i === 0) ctx.moveTo(x, y);
-        else ctx.lineTo(x, y);
+        const y = yB + Math.sin(x * freq + t * (0.5 + band * 0.2) + pg * 3) * amp * (0.5 + pg * 0.5);
+        if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
       }
-      const alpha = (0.03 + band * 0.015) * (0.4 + sp * 0.6);
-      ctx.strokeStyle = `rgba(79, 124, 255, ${alpha})`;
-      ctx.lineWidth = 1 + sp;
+      ctx.strokeStyle = `rgba(79,124,255,${(0.03 + band * 0.015) * (0.4 + pg * 0.6)})`;
+      ctx.lineWidth = 1 + pg;
       ctx.stroke();
     }
   };
-  animate();
-  return () => { cancelAnimationFrame(raf); observer.disconnect(); };
+  draw();
+  return () => { cancelAnimationFrame(raf); obs.disconnect(); };
 }
 
-interface ScrollAnimatedBgProps {
-  type?: AnimationType;
-  density?: number;
-}
+interface ScrollAnimatedBgProps { type?: AnimationType; }
 
 export default function ScrollAnimatedBg({ type = "particles" }: ScrollAnimatedBgProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const cleanupRef = useRef<(() => void) | undefined>(undefined);
-  const sectionProgressRef = useRef(0);
-  const sectionRef = useRef<HTMLElement | null>(null);
+  const progressRef = useRef(0);
 
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    // Find parent section
-    let section = canvas.parentElement;
-    while (section && !section.id) section = section.parentElement;
-    sectionRef.current = section || null;
+    // Track scroll progress based on the canvas element's own viewport position
+    const updateProgress = () => {
+      const rect = canvas.getBoundingClientRect();
+      const vh = window.innerHeight;
+      const start = rect.top - vh;
+      const end = rect.bottom;
+      const range = end - start;
+      if (range <= 0) { progressRef.current = 0; return; }
+      progressRef.current = Math.max(0, Math.min(1, -start / range));
+    };
 
-    const scrollProgress = () => sectionProgressRef.current;
+    window.addEventListener("scroll", updateProgress, { passive: true });
+    updateProgress();
+
+    const getProgress = () => progressRef.current;
 
     const frame = requestAnimationFrame(() => {
       switch (type) {
-        case "particles": cleanupRef.current = runParticles(canvas, scrollProgress); break;
-        case "orbs": cleanupRef.current = runOrbs(canvas, scrollProgress); break;
-        case "grid": cleanupRef.current = runGrid(canvas, scrollProgress); break;
-        case "lines": cleanupRef.current = runLines(canvas, scrollProgress); break;
-        case "ribbon": cleanupRef.current = runRibbon(canvas, scrollProgress); break;
+        case "particles": cleanupRef.current = runParticles(canvas, getProgress); break;
+        case "orbs": cleanupRef.current = runOrbs(canvas, getProgress); break;
+        case "grid": cleanupRef.current = runGrid(canvas, getProgress); break;
+        case "lines": cleanupRef.current = runLines(canvas, getProgress); break;
+        case "ribbon": cleanupRef.current = runRibbon(canvas, getProgress); break;
       }
     });
 
-    return () => { cancelAnimationFrame(frame); cleanupRef.current?.(); };
+    return () => { cancelAnimationFrame(frame); cleanupRef.current?.(); window.removeEventListener("scroll", updateProgress); };
   }, [type]);
 
   return (

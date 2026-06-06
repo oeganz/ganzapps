@@ -12,11 +12,11 @@ export default function ClientLogos() {
             <div className="w-24 h-px" style={{ background: "linear-gradient(90deg, transparent, #4F7CFF, transparent)" }} />
             
             <p className="text-center text-sm font-medium tracking-wide" style={{ color: "var(--text-muted)" }}>
-              Serving private enterprises across Southeast Asia
-</p>
+              Trusted by teams that ship fast
+            </p>
             
             <p className="text-center text-xs leading-relaxed max-w-lg" style={{ color: "var(--text-muted)", opacity: 0.6 }}>
-              Building AI-powered products, autonomous agents, and digital systems — with confidentiality at the core of every engagement.
+              Building AI-powered products, autonomous agents, and digital systems — from spark to production.
             </p>
             
             {/* Gradient line */}
