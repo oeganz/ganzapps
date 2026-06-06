@@ -41,7 +41,7 @@ export default function About() {
             <ScrollReveal delay={150}>
               <div className="glass-card p-8 flex flex-col sm:flex-row gap-6">
                 <img
-                  src="https://ugan.ganzapps.my.id/images/profile-real.webp"
+                  src="/images/profile-real.png"
                   alt="Ugan Saripudin"
                   className="w-20 h-20 rounded-2xl object-cover flex-shrink-0"
                 />
