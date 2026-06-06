@@ -1,7 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import { Server, Brain, Cpu, Workflow, Compass } from "lucide-react";
+import { Server, Brain, Cpu, Workflow, Compass, Network } from "lucide-react";
 import ScrollReveal from "./ScrollReveal";
 
 const services = [
@@ -44,6 +43,14 @@ const services = [
     badge: null,
     accent: "#f472b6",
     gradient: "linear-gradient(90deg, #f472b6, #8B5CF6)",
+  },
+  {
+    icon: Network,
+    title: "Agent Infrastructure",
+    desc: "Hermes & OpenClaw setup — orchestrate multi-agent systems, deploy persistent agents, and build production-grade AI pipelines.",
+    badge: "New",
+    accent: "#34D399",
+    gradient: "linear-gradient(90deg, #34D399, #22D3EE)",
   },
 ];
 

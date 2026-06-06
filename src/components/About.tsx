@@ -1,11 +1,12 @@
 "use client";
 
-import { Server, Bot, RefreshCw, GitBranch, Compass, Users } from "lucide-react";
+import { Server, Bot, RefreshCw, GitBranch, Compass, Users, Network } from "lucide-react";
 import ScrollReveal from "./ScrollReveal";
 
 const capabilities = [
   { icon: Server, label: "Full-Stack SaaS Development", desc: "Auth, billing, dashboards, APIs — production-grade from day one." },
   { icon: Bot, label: "AI Agent Systems", desc: "Autonomous agents that run 24/7 without human input." },
+  { icon: Network, label: "Agent Infrastructure Setup", desc: "Hermes & OpenClaw deployment — orchestrate multi-agent systems, persistent memory, and production-grade AI pipelines." },
   { icon: RefreshCw, label: "Legacy Modernization", desc: "Turn manual processes into automated, AI-powered systems." },
   { icon: GitBranch, label: "CI/CD & DevOps", desc: "Automated pipelines from code to production with rollback." },
   { icon: Compass, label: "Tech Strategy Consulting", desc: "Architecture review and stack selection before you commit." },
@@ -68,10 +69,10 @@ export default function About() {
           <div>
             <ScrollReveal>
               <p className="text-brand font-semibold tracking-[0.2em] uppercase text-xs mb-5">
- WHAT WE DO
+                WHAT WE DO
               </p>
               <h3 className="text-2xl md:text-3xl font-bold tracking-tight mb-8">
-                Our<span className="gradient-text">capabilities</span>
+                Our <span className="gradient-text">capabilities</span>
               </h3>
             </ScrollReveal>
 
