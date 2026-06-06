@@ -23,29 +23,51 @@ function isWebGLAvailable(): boolean {
   }
 }
 
-const WORD_SETS = [
-  ["AI Products", "AI Agents", "Your Future"],
-  ["Securely", "Quality", "It Smart"],
-  ["More Time", "The Code", "Your Future"],
-];
+// Word sets for each line
+const LINE1_WORDS = ["AI Products", "AI Agents", "SaaS Platforms"];
+const LINE2_WORDS = ["Securely", "Fast", "Right"];
+const LINE3_WORDS = ["More Time", "The Code", "Your Future"];
 
-function Typewriter({ words, delay }: { words: string[]; delay: number }) {
+function TypewriterWord({ words, colorClass }: { words: string[]; colorClass: string }) {
+  const [current, setCurrent] = useState(0);
+  const [visible, setVisible] = useState(true);
+  const [phase, setPhase] = useState<"typing" | "holding" | "erasing">("typing");
+  const [displayed, setDisplayed] = useState("");
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    let charIndex = 0;
+    const word = words[current];
+
+    const tick = () => {
+      if (phase === "typing") {
+        charIndex++;
+        setDisplayed(word.slice(0, charIndex));
+        if (charIndex < word.length) {
+          timeoutRef.current = setTimeout(tick, 60);
+        } else {
+          timeoutRef.current = setTimeout(() => setPhase("holding"), 1800);
+        }
+      } else if (phase === "holding") {
+        setPhase("erasing");
+      } else if (phase === "erasing") {
+        charIndex--;
+        setDisplayed(word.slice(0, charIndex));
+        if (charIndex > 0) {
+          timeoutRef.current = setTimeout(tick, 35);
+        } else {
+          setCurrent((c) => (c + 1) % words.length);
+          setPhase("typing");
+        }
+      }
+    };
+
+    timeoutRef.current = setTimeout(tick, 400);
+    return () => { if (timeoutRef.current) clearTimeout(timeoutRef.current); };
+  }, [phase, current, words]);
+
   return (
-    <span className="relative inline-block" style={{ minWidth: "5ch" }}>
-      {words.map((word, i) => (
-        <span
-          key={word}
-          className="typewriter"
-          style={{
-            animationDelay: `${delay + i * (7 / 3)}s`,
-            animationFillMode: "both",
-            display: i === 0 ? "inline-block" : "none",
-          }}
-        >
-          {word}
-        </span>
-      ))}
-    </span>
+    <span className={`${colorClass} inline-block min-w-[10ch]`}>{displayed}</span>
   );
 }
 
@@ -202,7 +224,7 @@ export default function Hero3D() {
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      <div className="absolute inset-0" style={{ background: "#0A0E1A" }} />
+<div className="absolute inset-0" style={{ background: "#0A0E1A" }} />
       <canvas ref={canvasRef} className="absolute inset-0 w-full h-full" style={{ display: webglOk ? "block" : "none" }} />
       <div
         className="absolute inset-0 pointer-events-none"
@@ -217,6 +239,7 @@ export default function Hero3D() {
         style={{ zIndex: 10 }}
       >
         <div className="text-center lg:text-left">
+
           {/* Badge */}
           <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-2 rounded-full border border-brand/20 bg-brand/5 mb-6 sm:mb-8">
             <Zap className="w-3.5 h-3.5 text-brand" fill="#4F7CFF" />
@@ -225,32 +248,29 @@ export default function Hero3D() {
             </span>
           </div>
 
-          {/* H1 — single line typewriter */}
-          <h1 className="text-3xl sm:text-4xl lg:text-6xl xl:text-7xl font-bold tracking-tight leading-[1.1] mb-6">
+          {/* H1 — typewriter tagline */}
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold tracking-tight leading-[1.05] mb-6 sm:mb-8">
             {/* Line 1 */}
-            <div className="hero-tagline text-center lg:text-left">
-              <span className="hero-tagline-item text-[#F8FAFC]">We Build.&nbsp;</span>
-              <span className="hero-tagline-item"><Typewriter words={WORD_SETS[0]} delay={0} /></span>
-            </div>
-            {/* Line 2 */}
-            <div className="hero-tagline text-center lg:text-left mt-2">
-              <span className="hero-tagline-item text-[#F8FAFC]">We Ship.&nbsp;</span>
-              <span className="hero-tagline-item"><Typewriter words={WORD_SETS[1]} delay={0} /></span>
-            </div>
-            {/* Line 3 */}
-            <div className="hero-tagline text-center lg:text-left mt-2">
-              <span className="hero-tagline-item text-[#F8FAFC]">You Own.&nbsp;</span>
-              <span className="hero-tagline-item"><Typewriter words={WORD_SETS[2]} delay={0} /></span>
+            <div className="block text-[#F8FAFC]">We Build&nbsp;</div>
+            <div className="block gradient-text mb-2">We Ship&nbsp;</div>
+            <div className="block text-[#F8FAFC]">You Own&nbsp;</div>
+ {/* Animated words outside tagline, below */}
+<div className="flex flex-wrap gap-x-4 gap-y-1 mt-2 justify-center lg:justify-start">
+              <TypewriterWord words={LINE1_WORDS} colorClass="gradient-text" />
+              <span className="text-[#F8FAFC]">·&nbsp;</span>
+              <TypewriterWord words={LINE2_WORDS} colorClass="gradient-text" />
+              <span className="text-[#F8FAFC]">·&nbsp;</span>
+              <TypewriterWord words={LINE3_WORDS} colorClass="gradient-text" />
             </div>
           </h1>
 
           {/* Subhead */}
-          <p className="text-base sm:text-lg text-[#CBD5E1] max-w-xl mb-8 leading-relaxed">
+          <p className="text-base sm:text-lg max-w-xl mx-auto lg:mx-0 px-4 sm:px-0 mb-8 sm:mb-12 leading-relaxed text-[#CBD5E1]">
             AI-first development studio building SaaS products, autonomous agents, and digital systems — from spark to production.
           </p>
 
           {/* CTAs */}
-          <div className="hero-cta flex flex-col sm:flex-row gap-4 justify-start">
+          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center lg:justify-start">
             <a href="#contact" className="btn-gradient text-sm px-6 py-3 inline-flex items-center gap-2">
               Start a Project →
             </a>
@@ -259,6 +279,14 @@ export default function Hero3D() {
             </a>
           </div>
         </div>
+      </div>
+
+      {/* Scroll indicator */}
+      <div className="absolute bottom-6 sm:bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-[#8392A8]">
+        <span className="text-[10px] sm:text-xs tracking-widest uppercase">Scroll</span>
+        <svg className="w-4 h-4 animate-bounce" fill="none" viewBox="0 0 24 24">
+          <path d="M12 5v14M5 12l7 7 7-7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+        </svg>
       </div>
     </section>
   );
